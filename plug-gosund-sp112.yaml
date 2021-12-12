@@ -1,3 +1,7 @@
+esphome:
+  platform: ESP8266
+  board: esp8285
+
 logger:
   baud_rate: 0
 
