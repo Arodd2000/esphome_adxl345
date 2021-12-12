@@ -1,0 +1,7 @@
+wifi:
+  networks: !secret known_networks
+
+api:
+
+ota:
+
