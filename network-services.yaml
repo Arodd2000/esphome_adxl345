@@ -1,0 +1,16 @@
+wifi:
+  networks: !secret known_networks
+
+  ap:
+    ssid: "${name_verbose} Fallback"
+    password: !secret fallback_password
+
+captive_portal:
+
+api:
+
+ota:
+
+web_server:
+  port: 80
+

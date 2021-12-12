@@ -1,0 +1,54 @@
+logger:
+  baud_rate: 0
+
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+
+time:
+  - platform: sntp
+
+binary_sensor:
+  - platform: gpio
+    name: ${name_verbose} Button
+    pin:
+      number: GPIO16
+      inverted: true
+    on_press:
+      - switch.toggle: mains
+
+switch:
+  - platform: gpio
+    id: mains
+    name: ${name_verbose} Mains
+    pin: GPIO14
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      - light.turn_on: led_red
+    on_turn_off:
+      - light.turn_off: led_red
+
+  - platform: gpio
+    id: usb
+    name: ${name_verbose} USB
+    pin: GPIO5
+    restore_mode: ALWAYS_ON
+
+output:
+  - platform: esp8266_pwm
+    id: state_led_red
+    pin:
+      number: GPIO0
+      inverted: true
+
+light:
+  - platform: monochromatic
+    id: led_red
+    output: state_led_red
+    restore_mode: ALWAYS_OFF
+
+status_led:
+  pin:
+    number: GPIO2
+    inverted: true
+
