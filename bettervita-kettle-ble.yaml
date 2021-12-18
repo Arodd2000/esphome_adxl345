@@ -1,0 +1,19 @@
+external_components:
+  - source: github://wifwucite/esphome-ble-controller
+
+esp32_ble_controller:
+  security_mode: none
+  services:
+    - service: "F79E6A9B-B3A2-4151-A318-E01CBCFE9FCE"
+      characteristics:
+        - characteristic: "00002A6E-0000-1000-8000-00805F9B34FA"
+          exposes: water_temperature
+        - characteristic: "75618FBB-C35B-4BF4-A418-94E5008329F2"
+          exposes: kettle_in_base
+    - service: "0000180F-0000-1000-8000-00805F9B34FA"
+      characteristics:
+        - characteristic: "00002A19-0000-1000-8000-00805F9B34FA"
+          exposes: battery_level
+        - characteristic: "00002B18-0000-1000-8000-00805F9B34FA"
+          exposes: battery_voltage
+

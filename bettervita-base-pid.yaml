@@ -1,0 +1,77 @@
+output:
+  - platform: slow_pwm
+    pin: GPIO22
+    id: heating_element
+    period: 1.0s
+
+select:
+  - platform: template
+    id: kettle_mode
+    name: "${name_verbose} Mode"
+    options:
+      - standby
+      - heat up
+      - heat up & hold
+    update_interval: never
+    optimistic: true
+    initial_option: standby
+
+climate:
+  - platform: pid
+    id: temperature_pid
+    name: "${name_verbose} PID Controller"
+    sensor: water_temperature
+    default_target_temperature: 0
+    heat_output: heating_element
+    icon: mdi:kettle
+    visual:
+      min_temperature: 0.0
+      max_temperature: 100.0
+      temperature_step: 1.0
+    control_parameters:
+      kp: 0.5
+
+script:
+  - id: script_set_pid_mode
+    mode: single
+    then:
+      lambda: |-
+        auto mode_call = id(kettle_mode).make_call();
+
+        bool is_kettle_in_base = id(kettle_in_base).state;
+        bool is_kettle_mode_active = id(kettle_mode).state.compare("standby");
+
+        if (!is_kettle_in_base && is_kettle_mode_active) {
+          // Safety off
+          mode_call.set_option("standby");
+          mode_call.perform();
+
+          is_kettle_mode_active = id(kettle_mode).state.compare("standby");
+        }
+
+        bool is_kettle_mode_hold = !id(kettle_mode).state.compare("heat up & hold");
+
+        float target_temperature = id(temperature_pid).target_temperature;
+        float current_temperature = id(temperature_pid).current_temperature;
+        bool is_temperature_reached = current_temperature >= target_temperature;
+
+        if (is_kettle_in_base && is_kettle_mode_active && !is_kettle_mode_hold && is_temperature_reached) {
+          mode_call.set_option("standby");
+          mode_call.perform();
+
+          is_kettle_mode_active = id(kettle_mode).state.compare("standby");
+        }
+
+        bool is_pid_off = id(temperature_pid).mode == CLIMATE_MODE_OFF;
+
+        auto pid_call = id(temperature_pid).make_call();
+        if ((!is_kettle_in_base || !is_kettle_mode_active) && !is_pid_off) {
+          pid_call.set_mode("OFF");
+          pid_call.perform();
+
+        } else if (is_kettle_in_base && is_kettle_mode_active && (!is_temperature_reached || is_kettle_mode_hold) && is_pid_off) {
+          pid_call.set_mode("HEAT");
+          pid_call.perform();
+
+        }
+

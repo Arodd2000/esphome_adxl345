@@ -1,0 +1,68 @@
+interval:
+  - interval: 0.25s
+    then:
+      - switch.turn_on: ntc_vcc
+      - component.update: ntc_adc
+      - switch.turn_off: ntc_vcc
+
+sensor:
+  - platform: adc
+    id: ntc_adc
+    pin: GPIO34
+    update_interval: never
+
+  - platform: resistance
+    id: ntc_res
+    sensor: ntc_adc
+    configuration: DOWNSTREAM
+    resistor: 330kOhm
+
+  - platform: ntc
+    id: water_temperature
+    name: "${name_verbose} Kettle Temperature"
+    sensor: ntc_res
+    calibration:
+      - 100.0kOhm -> 25°C
+      - 270.219kOhm -> 0°C
+      - 140.674kOhm -> 15°C
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+
+  - platform: adc
+    id: battery_voltage
+    name: "${name_verbose} Battery Voltage"
+    pin: GPIO33
+    attenuation: 11db
+    update_interval: 60s
+    filters:
+      - calibrate_linear:
+          - 0.0 -> 0.0
+          - 1.85600 -> 3.8
+    on_value:
+      then:
+        - sensor.template.publish:
+            id: battery_level
+            state: !lambda |-
+              if (x >= 4.2) {
+                return 100.0;
+              } else if (x < 4.2 && x > 3.4) {
+                return 100.0 - ((4.2 - x) / 0.8 * 100.0);
+              } else {
+                return 0.0;
+              }
+    unit_of_measurement: "V"
+    device_class: "voltage"
+
+  - platform: template
+    id: battery_level
+    name: "${name_verbose} Battery Level"
+    update_interval: never
+    unit_of_measurement: "%"
+    device_class: "battery"
+
+
+switch:
+  - platform: gpio
+    id: ntc_vcc
+    pin: GPIO26
+

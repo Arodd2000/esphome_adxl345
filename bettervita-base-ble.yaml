@@ -1,0 +1,58 @@
+esp32_ble_tracker:
+
+ble_client:
+    mac_address: ${kettle_mac}
+    id: ble_kettle
+
+binary_sensor:
+  - platform: template
+    id: kettle_in_base
+    name: ${name_verbose} Kettle in Base
+
+sensor:
+  - platform: ble_client
+    ble_client_id: ble_kettle
+    id: water_temperature
+    name: "${name_verbose} Water Temperature"
+    service_uuid: F79E6A9B-B3A2-4151-A318-E01CBCFE9FCE
+    characteristic_uuid: 00002A6E-0000-1000-8000-00805F9B34FA
+    notify: true
+    unit_of_measurement: "°C"
+    device_class: "temperature"
+    state_class: "measurement"
+    lambda: "return *(float *)(&x[0]);"
+
+  - platform: ble_client
+    internal: true
+    id: ble_kettle_in_base
+    ble_client_id: ble_kettle
+    service_uuid: F79E6A9B-B3A2-4151-A318-E01CBCFE9FCE
+    characteristic_uuid: 75618FBB-C35B-4BF4-A418-94E5008329F2
+    notify: true
+    lambda: |-
+      bool is_kettle_in_base = (x[0] != 0);
+      id(kettle_in_base).publish_state(is_kettle_in_base);
+      return x[0];
+
+  - platform: ble_client
+    ble_client_id: ble_kettle
+    name: "${name_verbose} Battery Level"
+    service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
+    characteristic_uuid: 00002A19-0000-1000-8000-00805F9B34FA
+    notify: true
+    unit_of_measurement: "%"
+    device_class: "battery"
+    state_class: "measurement"
+    lambda: "return *(float *)(&x[0]);"
+
+  - platform: ble_client
+    ble_client_id: ble_kettle
+    name: "${name_verbose} Battery Voltage"
+    service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
+    characteristic_uuid: 00002B18-0000-1000-8000-00805F9B34FA
+    notify: true
+    unit_of_measurement: "V"
+    device_class: "voltage"
+    state_class: "measurement"
+    lambda: "return *(float *)(&x[0]);"
+
