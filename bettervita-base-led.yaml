@@ -1,0 +1,14 @@
+output:
+  - platform: gpio
+    id: output_led_hold
+    pin: GPIO16
+
+light:
+  - platform: status_led
+    id: led_onoff
+    pin: GPIO17
+
+  - platform: binary
+    id: led_hold
+    output: output_led_hold
+
