@@ -1,0 +1,36 @@
+i2c:
+  id: display_i2c
+  sda: GPIO25
+  scl: GPIO22
+  scan: false
+
+font:
+  - file: 'dogicapixel.ttf'
+    id: ttf6
+    size: 6
+  - file: 'dogicapixel.ttf'
+    id: ttf7
+    size: 7
+  - file: 'dogicapixel.ttf'
+    id: ttf8
+    size: 8
+  - file: 'dogicapixel.ttf'
+    id: ttf12
+    size: 12
+  - file: 'dogicapixel.ttf'
+    id: ttf24
+    size: 24
+
+display:
+  - platform: ssd1306_i2c
+    id: main_display
+    i2c_id: display_i2c
+    model: "SH1106 128x64"
+    pages:
+      - id: main_page
+        lambda: |-
+          it.printf(2, 12, id(ttf24), TextAlign::TOP_LEFT, "%.0f", id(water_temperature).state);
+          it.print(42, 12, id(ttf12), TextAlign::TOP_LEFT, "°C");
+
+          it.printf(64, 21, id(ttf12), TextAlign::TOP_LEFT, "%.0f", id(temperature_pid).target_temperature);
+          it.print(86, 21, id(ttf8), TextAlign::TOP_LEFT, "°C");
