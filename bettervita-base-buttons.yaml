@@ -87,8 +87,12 @@ binary_sensor:
       lambda: |-
         auto pid_call = id(temperature_pid).make_call();
         float current = id(temperature_pid).target_temperature;
-        pid_call.set_target_temperature(current + 1.0);
+        float max_temperature = id(temperature_pid).get_traits().get_visual_max_temperature();
+        float next_temperature_step = current + 1.0;
+        float new_temperature = min(next_temperature_step, max_temperature);
+        pid_call.set_target_temperature(new_temperature);
         pid_call.perform();
+
 
   - platform: gpio
     id: button_minus
@@ -102,7 +106,10 @@ binary_sensor:
       lambda: |-
         auto pid_call = id(temperature_pid).make_call();
         float current = id(temperature_pid).target_temperature;
-        pid_call.set_target_temperature(current - 1.0);
+        float min_temperature = id(temperature_pid).get_traits().get_visual_min_temperature();
+        float next_temperature_step = current - 1.0;
+        float new_temperature = max(next_temperature_step, min_temperature);
+        pid_call.set_target_temperature(new_temperature);
         pid_call.perform();
 
 interval:
@@ -118,7 +125,10 @@ interval:
           lambda: |-
             auto pid_call = id(temperature_pid).make_call();
             float current = id(temperature_pid).target_temperature;
-            pid_call.set_target_temperature(current - ((int)current % 5) + 5.0);
+            float max_temperature = id(temperature_pid).get_traits().get_visual_max_temperature();
+            float next_temperature_step = current - ((int)current % 5) + 5.0;
+            float new_temperature = min(next_temperature_step, max_temperature);
+            pid_call.set_target_temperature(new_temperature);
             pid_call.perform();
 
   - interval: 333ms
@@ -133,9 +143,14 @@ interval:
           lambda: |-
             auto pid_call = id(temperature_pid).make_call();
             float current = id(temperature_pid).target_temperature;
-            if ((int)current % 5)
-              pid_call.set_target_temperature(current - ((int)current % 5));
-            else
-              pid_call.set_target_temperature(current - 5.0);
+            float min_temperature = id(temperature_pid).get_traits().get_visual_min_temperature();
+            float next_temperature_step = min_temperature;
+            if ((int)current % 5) {
+              next_temperature_step = current - ((int)current % 5);
+            } else {
+              next_temperature_step = current - 5.0;
+            }
+            float new_temperature = max(next_temperature_step, min_temperature);
+            pid_call.set_target_temperature(new_temperature);
             pid_call.perform();
 
