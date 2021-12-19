@@ -9,6 +9,7 @@ sensor:
   - platform: adc
     id: ntc_adc
     pin: GPIO34
+    attenuation: auto
     update_interval: never
 
   - platform: resistance
@@ -28,9 +29,9 @@ sensor:
     name: "${name_verbose} Kettle Temperature"
     sensor: ntc_res
     calibration:
-      - 7674.4kOhm -> 96.2°C
-      - 10.0kOhm -> 84°C
-      - 100.0kOhm -> 25°C
+      - 7.675 kOhm -> 96.4°C
+      - 101.5kOhm -> 23.0°C
+      - 275.0kOhm -> 2.5°C
     unit_of_measurement: "°C"
     device_class: "temperature"
 
