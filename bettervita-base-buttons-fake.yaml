@@ -1,0 +1,200 @@
+binary_sensor:
+  - platform: template
+    id: button_onoff
+    on_click:
+      lambda: |-
+        bool is_kettle_mode_active = id(kettle_mode).state.compare("standby");
+        auto mode_call = id(kettle_mode).make_call();
+
+        if (is_kettle_mode_active) {
+          mode_call.set_option("standby");
+          mode_call.perform();
+        } else {
+          mode_call.set_option("heat up & hold");
+          mode_call.perform();
+        }
+
+  - platform: template
+    id: button_hold
+    on_click:
+      lambda: |-
+        bool is_kettle_mode_hold = !id(kettle_mode).state.compare("heat up & hold");
+        auto mode_call = id(kettle_mode).make_call();
+
+        if (!is_kettle_mode_hold) {
+          mode_call.set_option("heat up & hold");
+          mode_call.perform();
+        } else {
+          mode_call.set_option("heat up");
+          mode_call.perform();
+        }
+
+  - platform: template
+    id: button_menu
+
+  - platform: template
+    id: button_timer
+
+  - platform: template
+    id: button_plus
+    on_click:
+      lambda: |-
+        auto pid_call = id(temperature_pid).make_call();
+        float current = id(temperature_pid).target_temperature;
+        pid_call.set_target_temperature(current + 1.0);
+        pid_call.perform();
+
+  - platform: template
+    id: button_minus
+    on_click:
+      lambda: |-
+        auto pid_call = id(temperature_pid).make_call();
+        float current = id(temperature_pid).target_temperature;
+        pid_call.set_target_temperature(current - 1.0);
+        pid_call.perform();
+
+button:
+  - platform: template
+    name: "${name_verbose} OnOff Click"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_onoff
+            state: true
+        - delay: 150ms
+        - binary_sensor.template.publish:
+            id: button_onoff
+            state: false
+
+  - platform: template
+    name: "${name_verbose} OnOff ClickLong"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_onoff
+            state: true
+        - delay: 600ms
+        - binary_sensor.template.publish:
+            id: button_onoff
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Hold Click"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_hold
+            state: true
+        - delay: 150ms
+        - binary_sensor.template.publish:
+            id: button_hold
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Hold ClickLong"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_hold
+            state: true
+        - delay: 600ms
+        - binary_sensor.template.publish:
+            id: button_hold
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Menu Click"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_menu
+            state: true
+        - delay: 150ms
+        - binary_sensor.template.publish:
+            id: button_menu
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Menu ClickLong"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_menu
+            state: true
+        - delay: 600ms
+        - binary_sensor.template.publish:
+            id: button_menu
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Timer Click"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_timer
+            state: true
+        - delay: 150ms
+        - binary_sensor.template.publish:
+            id: button_timer
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Timer ClickLong"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_timer
+            state: true
+        - delay: 600ms
+        - binary_sensor.template.publish:
+            id: button_timer
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Plus Click"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_plus
+            state: true
+        - delay: 150ms
+        - binary_sensor.template.publish:
+            id: button_plus
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Plus ClickLong"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_plus
+            state: true
+        - delay: 600ms
+        - binary_sensor.template.publish:
+            id: button_plus
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Minus Click"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_minus
+            state: true
+        - delay: 150ms
+        - binary_sensor.template.publish:
+            id: button_minus
+            state: false
+
+  - platform: template
+    name: "${name_verbose} Minus ClickLong"
+    on_press:
+      then:
+        - binary_sensor.template.publish:
+            id: button_minus
+            state: true
+        - delay: 600ms
+        - binary_sensor.template.publish:
+            id: button_minus
+            state: false
+

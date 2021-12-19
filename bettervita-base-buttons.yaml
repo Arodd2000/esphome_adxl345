@@ -1,0 +1,92 @@
+binary_sensor:
+  - platform: gpio
+    id: button_onoff
+    pin:
+      number: GPIO05
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+    on_click:
+      lambda: |-
+        bool is_kettle_mode_active = id(kettle_mode).state.compare("standby");
+        auto mode_call = id(kettle_mode).make_call();
+
+        if (is_kettle_mode_active) {
+          mode_call.set_option("standby");
+          mode_call.perform();
+        } else {
+          mode_call.set_option("heat up & hold");
+          mode_call.perform();
+        }
+
+  - platform: gpio
+    id: button_hold
+    pin:
+      number: GPIO018
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+    on_click:
+      lambda: |-
+        bool is_kettle_mode_hold = !id(kettle_mode).state.compare("heat up & hold");
+        auto mode_call = id(kettle_mode).make_call();
+
+        if (!is_kettle_mode_hold) {
+          mode_call.set_option("heat up & hold");
+          mode_call.perform();
+        } else {
+          mode_call.set_option("heat up");
+          mode_call.perform();
+        }
+
+  - platform: gpio
+    id: button_menu
+    pin:
+      number: GPIO13
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+
+  - platform: gpio
+    id: button_timer
+    pin:
+      number: GPIO26
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+
+
+  - platform: gpio
+    id: button_plus
+    pin:
+      number: GPIO19
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+    on_click:
+      lambda: |-
+        auto pid_call = id(temperature_pid).make_call();
+        float current = id(temperature_pid).target_temperature;
+        pid_call.set_target_temperature(current + 1.0);
+        pid_call.perform();
+
+  - platform: gpio
+    id: button_minus
+    pin:
+      number: GPIO23
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+    on_click:
+      lambda: |-
+        auto pid_call = id(temperature_pid).make_call();
+        float current = id(temperature_pid).target_temperature;
+        pid_call.set_target_temperature(current - 1.0);
+        pid_call.perform();
+
