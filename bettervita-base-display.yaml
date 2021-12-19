@@ -3,6 +3,7 @@ i2c:
   sda: GPIO25
   scl: GPIO22
   scan: false
+  frequency: 800kHz
 
 font:
   - file: 'dogicapixel.ttf'
@@ -26,6 +27,7 @@ display:
     id: main_display
     i2c_id: display_i2c
     model: "SH1106 128x64"
+    update_interval: 500ms
     pages:
       - id: main_page
         lambda: |-
