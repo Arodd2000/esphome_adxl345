@@ -90,3 +90,37 @@ binary_sensor:
         pid_call.set_target_temperature(current - 1.0);
         pid_call.perform();
 
+interval:
+  - interval: 333ms
+    then:
+      if:
+        condition:
+          for:
+            time: 1s
+            condition:
+              binary_sensor.is_on: button_plus
+        then:
+          lambda: |-
+            auto pid_call = id(temperature_pid).make_call();
+            float current = id(temperature_pid).target_temperature;
+            pid_call.set_target_temperature(current - ((int)current % 5) + 5.0);
+            pid_call.perform();
+
+  - interval: 333ms
+    then:
+      if:
+        condition:
+          for:
+            time: 1s
+            condition:
+              binary_sensor.is_on: button_minus
+        then:
+          lambda: |-
+            auto pid_call = id(temperature_pid).make_call();
+            float current = id(temperature_pid).target_temperature;
+            if ((int)current % 5)
+              pid_call.set_target_temperature(current - ((int)current % 5));
+            else
+              pid_call.set_target_temperature(current - 5.0);
+            pid_call.perform();
+
