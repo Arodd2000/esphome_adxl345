@@ -36,7 +36,11 @@ display:
 
       - id: main_page
         lambda: |-
-          it.printf(2, 12, id(ttf24), TextAlign::TOP_LEFT, "%.0f", id(water_temperature).state);
+          if (id(water_temperature).has_state())
+            it.printf(2, 12, id(ttf24), TextAlign::TOP_LEFT, "%.0f", id(water_temperature).state);
+          else
+            it.print(18, 12, id(ttf12), TextAlign::TOP_LEFT, "-");
+
           it.print(42, 12, id(ttf12), TextAlign::TOP_LEFT, "°C");
 
           it.printf(64, 21, id(ttf12), TextAlign::TOP_LEFT, "%.0f", id(temperature_pid).target_temperature);
