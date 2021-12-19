@@ -29,6 +29,11 @@ display:
     model: "SH1106 128x64"
     update_interval: 500ms
     pages:
+      - id: kettle_disconnected
+        lambda: |-
+          it.print(63, 16, id(ttf12), TextAlign::TOP_CENTER, "Kettle not");
+          it.print(63, 50, id(ttf12), TextAlign::BOTTOM_CENTER, "connected!");
+
       - id: main_page
         lambda: |-
           it.printf(2, 12, id(ttf24), TextAlign::TOP_LEFT, "%.0f", id(water_temperature).state);
@@ -36,3 +41,4 @@ display:
 
           it.printf(64, 21, id(ttf12), TextAlign::TOP_LEFT, "%.0f", id(temperature_pid).target_temperature);
           it.print(86, 21, id(ttf8), TextAlign::TOP_LEFT, "°C");
+

@@ -3,6 +3,12 @@ esp32_ble_tracker:
 ble_client:
     mac_address: ${kettle_mac}
     id: ble_kettle
+    on_connect:
+      then:
+        - display.page.show: main_page
+    on_disconnect:
+      then:
+        - display.page.show: kettle_disconnected
 
 binary_sensor:
   - platform: template
