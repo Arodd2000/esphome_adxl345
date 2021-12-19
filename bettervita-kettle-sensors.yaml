@@ -1,5 +1,5 @@
 interval:
-  - interval: 0.25s
+  - interval: 100ms
     then:
       - switch.turn_on: ntc_vcc
       - component.update: ntc_adc
@@ -13,18 +13,24 @@ sensor:
 
   - platform: resistance
     id: ntc_res
+    name: "${name_verbose} NTC Resistance"
     sensor: ntc_adc
     configuration: DOWNSTREAM
     resistor: 330kOhm
+    filters:
+      - median:
+          window_size: 7
+          send_every: 5
+          send_first_at: 3
 
   - platform: ntc
     id: water_temperature
     name: "${name_verbose} Kettle Temperature"
     sensor: ntc_res
     calibration:
+      - 7674.4kOhm -> 96.2°C
+      - 10.0kOhm -> 84°C
       - 100.0kOhm -> 25°C
-      - 270.219kOhm -> 0°C
-      - 140.674kOhm -> 15°C
     unit_of_measurement: "°C"
     device_class: "temperature"
 
@@ -66,3 +72,14 @@ switch:
     id: ntc_vcc
     pin: GPIO26
 
+binary_sensor:
+  - platform: gpio
+    name: "${name_verbose} Docked"
+    device_class: plug
+    pin:
+      number: GPIO13
+      mode:
+        input: true
+        pullup: true
+      inverted: false
+    id: kettle_in_base
