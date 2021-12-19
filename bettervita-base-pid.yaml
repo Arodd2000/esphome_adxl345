@@ -84,8 +84,10 @@ script:
         }
 
         if (is_kettle_mode_hold && !id(led_hold).current_values.is_on()) {
-          id(led_hold).turn_on();
+          auto call = id(led_hold).turn_on();
+          call.perform();
         } else if (!is_kettle_mode_active && id(led_hold).current_values.is_on()) {
-          id(led_hold).turn_off();
+          auto call = id(led_hold).turn_off();
+          call.perform();
         }
 
