@@ -17,6 +17,7 @@ sensor:
     service_uuid: F79E6A9B-B3A2-4151-A318-E01CBCFE9FCE
     characteristic_uuid: 00002A6E-0000-1000-8000-00805F9B34FA
     notify: true
+    update_interval: 1s
     unit_of_measurement: "°C"
     device_class: "temperature"
     state_class: "measurement"
@@ -24,6 +25,7 @@ sensor:
 
   - platform: ble_client
     internal: true
+    update_interval: 1s
     id: ble_kettle_in_base
     ble_client_id: ble_kettle
     service_uuid: F79E6A9B-B3A2-4151-A318-E01CBCFE9FCE
@@ -40,6 +42,7 @@ sensor:
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
     characteristic_uuid: 00002A19-0000-1000-8000-00805F9B34FA
     notify: true
+    update_interval: 30s
     unit_of_measurement: "%"
     device_class: "battery"
     state_class: "measurement"
@@ -51,6 +54,7 @@ sensor:
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
     characteristic_uuid: 00002B18-0000-1000-8000-00805F9B34FA
     notify: true
+    update_interval: 30s
     unit_of_measurement: "V"
     device_class: "voltage"
     state_class: "measurement"
