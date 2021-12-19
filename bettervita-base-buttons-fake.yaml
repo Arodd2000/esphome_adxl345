@@ -31,6 +31,21 @@ binary_sensor:
 
   - platform: template
     id: button_menu
+    on_click:
+      lambda: |-
+        auto options = id(profile).traits.get_options();
+        auto current = id(profile).state;
+
+        auto index = find(options.begin(), options.end(), current);
+
+        index++;
+
+        auto call = id(profile).make_call();
+        if (index == options.end())
+          call.set_option(*options.begin());
+        else
+          call.set_option(*index);
+        call.perform();
 
   - platform: template
     id: button_timer

@@ -49,6 +49,21 @@ binary_sensor:
       mode:
         input: true
         pullup: true
+    on_click:
+      lambda: |-
+        auto options = id(profile).traits.get_options();
+        auto current = id(profile).state;
+
+        auto index = find(options.begin(), options.end(), current);
+
+        index++;
+
+        auto call = id(profile).make_call();
+        if (index == options.end())
+          call.set_option(*options.begin());
+        else
+          call.set_option(*index);
+        call.perform();
 
   - platform: gpio
     id: button_timer

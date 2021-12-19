@@ -30,6 +30,12 @@ climate:
       temperature_step: 1.0
     control_parameters:
       kp: 0.5
+    on_state:
+      lambda: |-
+        auto current_profile = id(profile).state;
+        auto target_temperature = id(temperature_pid).target_temperature;
+        if (!current_profile.compare("General") && target_temperature != id(profile_general_temperature))
+          id(profile_general_temperature) = target_temperature;
 
 script:
   - id: script_set_pid_mode
