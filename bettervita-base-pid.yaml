@@ -41,14 +41,6 @@ script:
         bool is_kettle_in_base = id(kettle_in_base).state;
         bool is_kettle_mode_active = id(kettle_mode).state.compare("standby");
 
-        if (!is_kettle_in_base && is_kettle_mode_active) {
-          // Safety off
-          mode_call.set_option("standby");
-          mode_call.perform();
-
-          is_kettle_mode_active = id(kettle_mode).state.compare("standby");
-        }
-
         bool is_kettle_mode_hold = !id(kettle_mode).state.compare("heat up & hold");
 
         float target_temperature = id(temperature_pid).target_temperature;
