@@ -60,11 +60,17 @@ display:
 
 
           bool pid_active = id(temperature_pid).mode != CLIMATE_MODE_OFF;
+          bool heating_element_active = id(heating_element_feedback).state;
 
-          if (id(temperature_reached).state) {
-            it.image(102, 28, id(icon_thermometer_alert));
-          } else if (pid_active) {
+          if (heating_element_active) {
             it.image(102, 28, id(icon_thermometer_heating));
+
+          } else if (id(temperature_reached).state) {
+            it.image(102, 28, id(icon_thermometer_alert));
+
+          } else if (pid_active && !heating_element_active) {
+            it.image(102, 28, id(icon_thermometer_high));
+
           }
 
       - id: display_off
