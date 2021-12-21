@@ -16,6 +16,14 @@ select:
     update_interval: never
     optimistic: true
     initial_option: standby
+    on_value:
+      if:
+        condition:
+          lambda: return !id(kettle_mode).state.compare("idle");
+        then:
+          binary_sensor.template.publish:
+            id: temperature_reached
+            state: false
 
 interval:
   - interval: 10s
