@@ -9,6 +9,9 @@ ble_client:
     on_disconnect:
       then:
         - display.page.show: kettle_disconnected
+        - binary_sensor.template.publish:
+            id: kettle_in_base
+            state: false
 
 binary_sensor:
   - platform: template
