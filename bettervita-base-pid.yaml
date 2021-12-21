@@ -39,6 +39,11 @@ climate:
         if (!current_profile.compare("General") && target_temperature != id(profile_general_temperature))
           id(profile_general_temperature) = target_temperature;
 
+binary_sensor:
+  - platform: template
+    id: temperature_reached
+    name: "${name_verbose} Setpoint Reached"
+
 script:
   - id: script_set_pid_mode
     mode: single
@@ -54,6 +59,10 @@ script:
         float target_temperature = id(temperature_pid).target_temperature;
         float current_temperature = id(temperature_pid).current_temperature;
         bool is_temperature_reached = current_temperature >= target_temperature;
+
+        if (is_kettle_mode_active && is_temperature_reached) {
+          id(temperature_reached).publish_state(true);
+        }
 
         if (is_kettle_in_base && is_kettle_mode_active && !is_kettle_mode_hold && is_temperature_reached) {
           mode_call.set_option("standby");
@@ -72,6 +81,9 @@ script:
         } else if (is_kettle_in_base && is_kettle_mode_active && (!is_temperature_reached || is_kettle_mode_hold) && is_pid_off) {
           pid_call.set_mode("HEAT");
           pid_call.perform();
+
+          if (id(temperature_reached).state)
+            id(temperature_reached).publish_state(false);
 
         }
 
