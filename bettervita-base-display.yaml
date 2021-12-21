@@ -22,6 +22,14 @@ font:
     id: ttf24
     size: 24
 
+image:
+  - file: 'icons/thermometer-alert-whitebg.png'
+    id: icon_thermometer_alert
+  - file: 'icons/thermometer-chevron-up-whitebg.png'
+    id: icon_thermometer_heating
+  - file: 'icons/thermometer-high-whitebg.png'
+    id: icon_thermometer_high
+
 display:
   - platform: ssd1306_i2c
     id: main_display
@@ -49,4 +57,13 @@ display:
           it.print(126, 12, id(ttf8), TextAlign::TOP_RIGHT, id(profile).state.c_str());
 
           it.print(2, 52, id(ttf8), TextAlign::BOTTOM_LEFT, "00:00");
+
+
+          bool pid_active = id(temperature_pid).mode != CLIMATE_MODE_OFF;
+
+          if (id(temperature_reached).state) {
+            it.image(102, 28, id(icon_thermometer_alert));
+          } else if (pid_active) {
+            it.image(102, 28, id(icon_thermometer_heating));
+          }
 
