@@ -75,12 +75,12 @@ switch:
 
 binary_sensor:
   - platform: gpio
+    id: kettle_in_base
     name: "${name_verbose} Docked"
     device_class: plug
     pin:
       number: GPIO13
       mode:
         input: true
-        pullup: true
+        pulldown: true
       inverted: false
-    id: kettle_in_base
