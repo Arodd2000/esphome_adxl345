@@ -19,6 +19,19 @@ binary_sensor:
           mode_call.set_option("heat up & hold");
           mode_call.perform();
         }
+    on_press:
+      then:
+        - delay: 1s
+        - if:
+           condition:
+             for:
+               time: 1s
+               condition:
+                 binary_sensor.is_on: button_onoff
+           then:
+             select.set:
+               id: kettle_mode
+               option: idle
 
   - platform: gpio
     id: button_hold
