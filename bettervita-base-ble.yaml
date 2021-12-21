@@ -22,6 +22,14 @@ binary_sensor:
   - platform: template
     id: kettle_in_base
     name: ${name_verbose} Kettle in Base
+    on_state:
+      if:
+        condition:
+          lambda: return !id(kettle_mode).state.compare("idle");
+        then:
+          select.set:
+            id: kettle_mode
+            option: standby
 
 sensor:
   - platform: ble_client
