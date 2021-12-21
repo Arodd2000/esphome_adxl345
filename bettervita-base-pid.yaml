@@ -21,9 +21,14 @@ select:
         condition:
           lambda: return !id(kettle_mode).state.compare("idle");
         then:
-          binary_sensor.template.publish:
-            id: temperature_reached
-            state: false
+          - binary_sensor.template.publish:
+              id: temperature_reached
+              state: false
+          - display.page.show:
+              id: display_off
+        else:
+          display.page.show:
+            id: main_page
 
 interval:
   - interval: 10s

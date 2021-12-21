@@ -4,8 +4,13 @@ ble_client:
     mac_address: ${kettle_mac}
     id: ble_kettle
     on_connect:
-      then:
-        - display.page.show: main_page
+      if:
+        condition:
+          lambda: return id(kettle_mode).state.compare("idle");
+        then:
+          - display.page.show: main_page
+        else:
+          - display.page.show: display_off
     on_disconnect:
       then:
         - display.page.show: kettle_disconnected

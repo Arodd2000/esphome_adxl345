@@ -67,3 +67,6 @@ display:
             it.image(102, 28, id(icon_thermometer_heating));
           }
 
+      - id: display_off
+        lambda: ''
+
