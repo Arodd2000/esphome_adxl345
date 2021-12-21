@@ -4,12 +4,6 @@ output:
     id: heating_element
     period: 5.0s
 
-switch:
-  - platform: gpio
-    id: heating_element_gpio
-    internal: true
-    pin: GPIO32
-
 select:
   - platform: template
     id: kettle_mode
