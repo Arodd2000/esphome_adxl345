@@ -9,12 +9,27 @@ select:
     id: kettle_mode
     name: "${name_verbose} Mode"
     options:
+      - idle
       - standby
       - heat up
       - heat up & hold
     update_interval: never
     optimistic: true
     initial_option: standby
+
+interval:
+  - interval: 10s
+    then:
+      if:
+        condition:
+          for:
+            time: 5min
+            condition:
+              lambda: return !id(kettle_mode).state.compare("standby");
+        then:
+          select.set:
+            id: kettle_mode
+            option: idle
 
 climate:
   - platform: pid
@@ -52,7 +67,7 @@ script:
         auto mode_call = id(kettle_mode).make_call();
 
         bool is_kettle_in_base = id(kettle_in_base).state;
-        bool is_kettle_mode_active = id(kettle_mode).state.compare("standby");
+        bool is_kettle_mode_active = id(kettle_mode).state.compare("standby") && id(kettle_mode).state.compare("idle");
 
         bool is_kettle_mode_hold = !id(kettle_mode).state.compare("heat up & hold");
 
@@ -68,7 +83,7 @@ script:
           mode_call.set_option("standby");
           mode_call.perform();
 
-          is_kettle_mode_active = id(kettle_mode).state.compare("standby");
+          is_kettle_mode_active = id(kettle_mode).state.compare("standby") && id(kettle_mode).state.compare("idle");
         }
 
         bool is_pid_off = id(temperature_pid).mode == CLIMATE_MODE_OFF;
