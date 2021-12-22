@@ -30,6 +30,9 @@ image:
   - file: 'icons/thermometer-high-whitebg.png'
     id: icon_thermometer_high
 
+  - file: 'icons/battery-alert-variant-outline-whitebg.png'
+    id: icon_battery_alert
+
 display:
   - platform: ssd1306_i2c
     id: main_display
@@ -72,6 +75,10 @@ display:
             it.image(102, 28, id(icon_thermometer_high));
 
           }
+
+          if (id(ble_battery_level).state < 30.0)
+            if ((millis() / 500) % 3)
+              it.image(102, 28, id(icon_battery_alert));
 
       - id: display_off
         lambda: ''

@@ -59,6 +59,7 @@ sensor:
       return x[0];
 
   - platform: ble_client
+    id: ble_battery_level
     ble_client_id: ble_kettle
     name: "${name_verbose} Battery Level"
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
