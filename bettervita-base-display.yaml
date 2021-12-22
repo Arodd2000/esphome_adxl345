@@ -89,8 +89,13 @@ display:
           int seconds = time_to_display % 60;
           it.printf(2, 54, id(ttf12), TextAlign::BOTTOM_LEFT, "%02i:%02i", minutes, seconds);
 
-          if (id(timer_reached).state)
+          if (id(timer_reached).state) {
             icons.push_back(std::make_pair(1, id(icon_timer)));
+
+            if (id(timer_start).is_running()) {
+              it.print(50, 54, id(ttf12), TextAlign::BOTTOM_LEFT, "+");
+            }
+          }
 
           int slices_required = 0;
           for (auto ic = icons.begin(); ic != icons.end(); ic++) {
