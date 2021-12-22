@@ -78,6 +78,7 @@ sensor:
     characteristic_uuid: 00002B18-0000-1000-8000-00805F9B34FA
     notify: true
     update_interval: 30s
+    accuracy_decimals: 1
     unit_of_measurement: "V"
     device_class: "voltage"
     state_class: "measurement"
