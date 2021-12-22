@@ -2,6 +2,7 @@ interval:
   - interval: 100ms
     then:
       - switch.turn_on: ntc_vcc
+      - component.update: vcc_adc
       - component.update: ntc_adc
       - switch.turn_off: ntc_vcc
 
@@ -11,6 +12,16 @@ sensor:
     pin: GPIO34
     attenuation: auto
     update_interval: never
+
+  - platform: adc
+    id: vcc_adc
+    pin: GPIO32
+    attenuation: 2.5db
+    update_interval: never
+    filters:
+      multiply: 3.0
+    on_value:
+      lambda: id(ntc_res).set_reference_voltage(x);
 
   - platform: resistance
     id: ntc_res
