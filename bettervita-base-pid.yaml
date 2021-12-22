@@ -61,9 +61,9 @@ climate:
       max_temperature: 99.0
       temperature_step: 1.0
     control_parameters:
-      kp: 0.45485
-      ki: 0.09536
-      kd: 0.54237
+      kp: 0.15
+      ki: 0.0
+      kd: 0.0
     on_state:
       lambda: |-
         auto current_profile = id(profile).state;
