@@ -77,6 +77,19 @@ binary_sensor:
         else
           call.set_option(*index);
         call.perform();
+    on_press:
+      then:
+        - delay: 400ms
+        - if:
+           condition:
+             for:
+               time: 400ms
+               condition:
+                 binary_sensor.is_on: button_menu
+           then:
+             select.set:
+               id: profile
+               option: General
 
   - platform: gpio
     id: button_timer
@@ -86,7 +99,6 @@ binary_sensor:
       mode:
         input: true
         pullup: true
-
 
   - platform: gpio
     id: button_plus
@@ -105,7 +117,6 @@ binary_sensor:
         float new_temperature = min(next_temperature_step, max_temperature);
         pid_call.set_target_temperature(new_temperature);
         pid_call.perform();
-
 
   - platform: gpio
     id: button_minus
