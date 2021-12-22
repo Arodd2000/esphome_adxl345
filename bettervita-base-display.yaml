@@ -27,6 +27,9 @@ image:
   - file: 'icons/battery-alert-variant-outline-whitebg.png'
     id: icon_battery_alert
 
+  - file: 'icons/timer-outline-whitebg.png'
+    id: icon_timer
+
 display:
   - platform: ssd1306_i2c
     id: main_display
@@ -53,9 +56,6 @@ display:
 
           it.print(126, 12, id(ttf8), TextAlign::TOP_RIGHT, id(profile).state.c_str());
 
-          it.print(2, 52, id(ttf8), TextAlign::BOTTOM_LEFT, "00:00");
-
-
           bool pid_active = id(temperature_pid).mode != CLIMATE_MODE_OFF;
           bool heating_element_active = id(heating_element_feedback).state;
 
@@ -77,6 +77,20 @@ display:
 
           if (id(ble_battery_level).state < 30.0)
             icons.push_back(std::make_pair(3, id(icon_battery_alert)));
+
+          int time_to_display = 0;
+          if (id(timer_start).is_running() || id(timer_value).state != 0.0)
+            time_to_display = (int)id(timer_value).state;
+          else
+            time_to_display = (int)id(timer_default_value).state;
+
+
+          int minutes = time_to_display / 60;
+          int seconds = time_to_display % 60;
+          it.printf(2, 54, id(ttf12), TextAlign::BOTTOM_LEFT, "%02i:%02i", minutes, seconds);
+
+          if (id(timer_reached).state)
+            icons.push_back(std::make_pair(5, id(icon_timer)));
 
           int slices_required = 0;
           for (auto ic = icons.begin(); ic != icons.end(); ic++) {

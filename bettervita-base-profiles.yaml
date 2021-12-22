@@ -20,35 +20,62 @@ select:
         - select.set:
             id: kettle_mode
             option: standby
+        - script.execute: timer_stop
+
         - if:
             condition:
               lambda: return !x.compare("General");
             then:
-              lambda: |-
-                auto call = id(temperature_pid).make_call();
-                call.set_target_temperature(id(profile_general_temperature));
-                call.perform();
+              - lambda: |-
+                  auto call = id(temperature_pid).make_call();
+                  call.set_target_temperature(id(profile_general_temperature));
+                  call.perform();
+              - number.set:
+                  id: timer_default_value
+                  value: 0.0
+              - select.set:
+                  id: timer_direction
+                  option: Count Up
+
         - if:
             condition:
               lambda: return !x.compare("Coffee");
             then:
-              climate.control:
-                id: temperature_pid
-                target_temperature: 96.0
+              - climate.control:
+                  id: temperature_pid
+                  target_temperature: 96.0
+              - number.set:
+                  id: timer_default_value
+                  value: 180.0
+              - select.set:
+                  id: timer_direction
+                  option: Count Down
 
         - if:
             condition:
               lambda: return !x.compare("Black Tea");
             then:
-              climate.control:
-                id: temperature_pid
-                target_temperature: 90.0
+              - climate.control:
+                  id: temperature_pid
+                  target_temperature: 90.0
+              - number.set:
+                  id: timer_default_value
+                  value: 180.0
+              - select.set:
+                  id: timer_direction
+                  option: Count Down
 
         - if:
             condition:
               lambda: return !x.compare("Green Tea");
             then:
-              climate.control:
-                id: temperature_pid
-                target_temperature: 60.0
+              - climate.control:
+                  id: temperature_pid
+                  target_temperature: 60.0
+              - number.set:
+                  id: timer_default_value
+                  value: 180.0
+              - select.set:
+                  id: timer_direction
+                  option: Count Down
 

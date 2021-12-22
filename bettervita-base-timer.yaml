@@ -1,0 +1,136 @@
+select:
+  - platform: template
+    name: "${name_verbose} Timer Direction"
+    icon: "mdi:timer-cog-outline"
+    id: timer_direction
+    options:
+      - Count Up
+      - Count Down
+    optimistic: true
+    update_interval: never
+    on_value:
+      then:
+        - binary_sensor.template.publish:
+            id: timer_counts_up
+            state: !lambda return !x.compare("Count Up");
+        - script.execute: timer_reset
+
+button:
+  - platform: template
+    name: "${name_verbose} Toggle Timer"
+    icon: "mdi:timer-outline"
+    on_press:
+     script.execute: timer_toggle
+
+  - platform: template
+    name: "${name_verbose} Reset Timer"
+    icon: "mdi:timer-outline"
+    on_press:
+      script.execute: timer_reset
+
+number:
+  - platform: template
+    id: timer_default_value
+    name: "${name_verbose} Timer Default"
+    min_value: 0.0
+    max_value: 3600.0
+    step: 1.0
+    update_interval: never
+    optimistic: true
+    icon: "mdi:timer-cog-outline"
+    unit_of_measurement: "s"
+    on_value:
+      script.execute: timer_reset
+
+sensor:
+  - platform: template
+    id: timer_value
+    name: "${name_verbose} Timer"
+    icon: "mdi:timer-outline"
+    unit_of_measurement: "s"
+    accuracy_decimals: 0
+    update_interval: never
+
+binary_sensor:
+  - platform: template
+    id: timer_reached
+    name: "${name_verbose} Timer Reached"
+    icon: "mdi:timer-outline"
+
+  - platform: template
+    id: timer_counts_up
+
+script:
+  - id: timer_start
+    mode: single
+    then:
+      - binary_sensor.template.publish:
+          id: timer_reached
+          state: false
+
+      - while:
+          condition:
+            or:
+              - lambda: return id(timer_value).state > 0.0;
+              - binary_sensor.is_on: timer_counts_up
+          then:
+            - delay: 1s
+            - if:
+                condition:
+                  binary_sensor.is_on: timer_counts_up
+                then:
+                  lambda: id(timer_value).publish_state(id(timer_value).state + 1.0);
+                else:
+                  lambda: id(timer_value).publish_state(id(timer_value).state - 1.0);
+
+            - if:
+                condition:
+                  - or:
+                    - and:
+                      - binary_sensor.is_on: timer_counts_up
+                      - lambda: return id(timer_value).state >= id(timer_default_value).state;
+                    - and:
+                      - binary_sensor.is_off: timer_counts_up
+                      - lambda: return id(timer_value).state <= 0.0;
+                then:
+                  - binary_sensor.template.publish:
+                      id: timer_reached
+                      state: true
+
+  - id: timer_stop
+    then:
+      if:
+        condition:
+          script.is_running: timer_start
+        then:
+          script.stop: timer_start
+
+  - id: timer_reset
+    then:
+      - script.execute: timer_stop
+      - binary_sensor.template.publish:
+          id: timer_reached
+          state: false
+      - if:
+          condition:
+            binary_sensor.is_on: timer_counts_up
+          then:
+            - sensor.template.publish:
+                id: timer_value
+                state: 0.0
+          else:
+            - sensor.template.publish:
+                id: timer_value
+                state: !lambda return id(timer_default_value).state;
+
+  - id: timer_toggle
+    then:
+      if:
+        condition:
+          script.is_running: timer_start
+        then:
+          script.stop: timer_start
+        else:
+          script.execute: timer_start
+
+

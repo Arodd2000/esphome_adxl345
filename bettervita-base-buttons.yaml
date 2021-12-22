@@ -108,6 +108,24 @@ binary_sensor:
       mode:
         input: true
         pullup: true
+    on_click:
+      if:
+        condition:
+          lambda: return id(kettle_mode).state.compare("idle");
+        then:
+          script.execute: timer_toggle
+    on_press:
+      then:
+        - delay: 400ms
+        - if:
+           condition:
+             - lambda: return id(kettle_mode).state.compare("idle");
+             - for:
+                 time: 400ms
+                 condition:
+                   binary_sensor.is_on: button_timer
+           then:
+             script.execute: timer_reset
 
   - platform: gpio
     id: button_plus
