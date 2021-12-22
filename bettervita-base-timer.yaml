@@ -85,6 +85,7 @@ script:
 
             - if:
                 condition:
+                  - lambda: return id(timer_default_value).state > 0.0;
                   - or:
                     - and:
                       - binary_sensor.is_on: timer_counts_up
