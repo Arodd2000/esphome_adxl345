@@ -38,7 +38,10 @@ interval:
           for:
             time: 5min
             condition:
-              lambda: return !id(kettle_mode).state.compare("standby");
+              - lambda: return !id(kettle_mode).state.compare("standby");
+              - not:
+                  script.is_running: timer_start
+
         then:
           select.set:
             id: kettle_mode
