@@ -13,7 +13,6 @@ select:
         - binary_sensor.template.publish:
             id: timer_counts_up
             state: !lambda return !x.compare("Count Up");
-        - script.execute: timer_reset
 
 button:
   - platform: template
@@ -77,7 +76,9 @@ script:
             - delay: 1s
             - if:
                 condition:
-                  binary_sensor.is_on: timer_counts_up
+                  or:
+                    - binary_sensor.is_on: timer_counts_up
+                    - binary_sensor.is_on: timer_reached
                 then:
                   lambda: id(timer_value).publish_state(id(timer_value).state + 1.0);
                 else:
@@ -97,6 +98,15 @@ script:
                   - binary_sensor.template.publish:
                       id: timer_reached
                       state: true
+            - if:
+                condition:
+                  - lambda: return id(timer_value).state <= 0.0;
+                  - binary_sensor.is_off: timer_counts_up
+                  - binary_sensor.is_on: timer_reached
+                then:
+                  - sensor.template.publish:
+                      id: timer_value
+                      state: !lambda return id(timer_default_value).state;
 
   - id: timer_stop
     then:
