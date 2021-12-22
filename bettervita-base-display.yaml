@@ -7,12 +7,6 @@ i2c:
 
 font:
   - file: 'dogicapixel.ttf'
-    id: ttf6
-    size: 6
-  - file: 'dogicapixel.ttf'
-    id: ttf7
-    size: 7
-  - file: 'dogicapixel.ttf'
     id: ttf8
     size: 8
   - file: 'dogicapixel.ttf'
