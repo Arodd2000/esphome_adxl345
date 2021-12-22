@@ -46,7 +46,7 @@ select:
                   target_temperature: 96.0
               - number.set:
                   id: timer_default_value
-                  value: 180.0
+                  value: 240.0
               - select.set:
                   id: timer_direction
                   option: Count Down
