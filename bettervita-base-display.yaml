@@ -59,20 +59,41 @@ display:
           bool pid_active = id(temperature_pid).mode != CLIMATE_MODE_OFF;
           bool heating_element_active = id(heating_element_feedback).state;
 
+          std::vector<std::pair<int, Image*>> icons = {};
+
           if (heating_element_active) {
-            it.image(102, 28, id(icon_thermometer_heating));
+            icons.push_back(std::make_pair(1, id(icon_thermometer_heating)));
 
           } else if (id(temperature_reached).state) {
-            it.image(102, 28, id(icon_thermometer_alert));
+            icons.push_back(std::make_pair(1, id(icon_thermometer_alert)));
 
           } else if (pid_active && !heating_element_active) {
-            it.image(102, 28, id(icon_thermometer_high));
+            icons.push_back(std::make_pair(1, id(icon_thermometer_high)));
+
+          } else {
+            icons.push_back(std::make_pair(1, nullptr));
 
           }
 
           if (id(ble_battery_level).state < 30.0)
-            if ((millis() / 500) % 3)
-              it.image(102, 28, id(icon_battery_alert));
+            icons.push_back(std::make_pair(3, id(icon_battery_alert)));
+
+          int slices_required = 0;
+          for (auto ic = icons.begin(); ic != icons.end(); ic++) {
+            slices_required += ic->first;
+          }
+
+          int current_slice = (millis() / (2500 / slices_required)) % slices_required;
+
+          int slice_offset = 0;
+          for (auto ic = icons.begin(); ic != icons.end(); ic++) {
+            slice_offset += ic->first;
+            if (current_slice < slice_offset) {
+              if (ic->second)
+                it.image(102, 28, ic->second);
+              break;
+            }
+          }
 
       - id: display_off
         lambda: ''
