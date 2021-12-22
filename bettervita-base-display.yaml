@@ -90,7 +90,7 @@ display:
           it.printf(2, 54, id(ttf12), TextAlign::BOTTOM_LEFT, "%02i:%02i", minutes, seconds);
 
           if (id(timer_reached).state)
-            icons.push_back(std::make_pair(5, id(icon_timer)));
+            icons.push_back(std::make_pair(1, id(icon_timer)));
 
           int slices_required = 0;
           for (auto ic = icons.begin(); ic != icons.end(); ic++) {
