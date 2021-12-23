@@ -63,10 +63,6 @@ script:
   - id: timer_start
     mode: single
     then:
-      - binary_sensor.template.publish:
-          id: timer_reached
-          state: false
-
       - while:
           condition:
             or:
@@ -122,6 +118,7 @@ script:
       - binary_sensor.template.publish:
           id: timer_reached
           state: false
+
       - if:
           condition:
             binary_sensor.is_on: timer_counts_up
