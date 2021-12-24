@@ -30,12 +30,12 @@ select:
                   auto call = id(temperature_pid).make_call();
                   call.set_target_temperature(id(profile_general_temperature));
                   call.perform();
-              - number.set:
-                  id: timer_default_value
-                  value: 0.0
               - select.set:
                   id: timer_direction
                   option: Count Up
+              - number.set:
+                  id: timer_default_value
+                  value: 0.0
 
         - if:
             condition:
@@ -44,12 +44,12 @@ select:
               - climate.control:
                   id: temperature_pid
                   target_temperature: 96.0
-              - number.set:
-                  id: timer_default_value
-                  value: 240.0
               - select.set:
                   id: timer_direction
                   option: Count Down
+              - number.set:
+                  id: timer_default_value
+                  value: 240.0
 
         - if:
             condition:
@@ -58,12 +58,12 @@ select:
               - climate.control:
                   id: temperature_pid
                   target_temperature: 90.0
-              - number.set:
-                  id: timer_default_value
-                  value: 180.0
               - select.set:
                   id: timer_direction
                   option: Count Down
+              - number.set:
+                  id: timer_default_value
+                  value: 180.0
 
         - if:
             condition:
@@ -72,10 +72,10 @@ select:
               - climate.control:
                   id: temperature_pid
                   target_temperature: 60.0
-              - number.set:
-                  id: timer_default_value
-                  value: 180.0
               - select.set:
                   id: timer_direction
                   option: Count Down
+              - number.set:
+                  id: timer_default_value
+                  value: 180.0
 
