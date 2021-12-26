@@ -1,4 +1,4 @@
-substitions:
+substitutions:
   pin_ntc_vcc: GPIO26
   pin_ntc_adc: GPIO34
   pin_vcc_adc: GPIO32
