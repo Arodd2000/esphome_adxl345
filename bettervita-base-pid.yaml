@@ -109,7 +109,7 @@ script:
         float current_temperature = id(temperature_pid).current_temperature;
         bool is_temperature_reached = current_temperature >= target_temperature;
 
-        if (is_kettle_mode_active && is_temperature_reached) {
+        if (is_kettle_mode_active && is_temperature_reached && !id(temperature_reached).state) {
           id(temperature_reached).publish_state(true);
         }
 
