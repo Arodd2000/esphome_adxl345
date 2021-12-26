@@ -5,8 +5,8 @@ substitutions:
   pin_battery_voltage: GPIO33
   pin_kettle_in_base: GPIO13
   attenuation_ntc_adc: auto
-  attenuation_vcc_adc: 2.5db
-  attenuation_battery_voltage: 2.5db
+  attenuation_vcc_adc: auto
+  attenuation_battery_voltage: auto
 
 interval:
   - interval: 100ms
