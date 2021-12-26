@@ -24,7 +24,7 @@ script:
             rtttl.is_playing
           then:
             - rtttl.stop
-      - rtttl.play: ${rtttl_song_mario}
+      - rtttl.play: ${rtttl_format_mario}
 
   - id: rtttl_beep
     then:
