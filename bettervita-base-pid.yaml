@@ -16,6 +16,9 @@ esphome:
   on_boot:
     then:
       - component.update: power
+  on_loop:
+    then:
+      - script.execute: script_set_pid_mode
 
 time:
   - platform: sntp
