@@ -131,7 +131,7 @@ script:
           pid_call.set_mode("HEAT");
           pid_call.perform();
 
-          if (id(temperature_reached).state)
+          if (id(temperature_reached).state && !is_temperature_reached)
             id(temperature_reached).publish_state(false);
 
         }
