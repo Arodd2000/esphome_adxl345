@@ -55,6 +55,8 @@ binary_sensor:
     id: timer_reached
     name: "${name_verbose} Timer Reached"
     icon: "mdi:timer-outline"
+    on_press:
+      script.execute: rtttl_beep
 
   - platform: template
     id: timer_counts_up
@@ -103,6 +105,14 @@ script:
                   - sensor.template.publish:
                       id: timer_value
                       state: !lambda return id(timer_default_value).state;
+
+            - if:
+                condition:
+                  - binary_sensor.is_on: timer_reached
+                  - lambda: return id(timer_value).state > id(timer_default_value).state;
+                  - lambda: return !((int)(id(timer_value).state - id(timer_default_value).state) % 60);
+                then:
+                  - script.execute: rtttl_double_beep
 
   - id: timer_stop
     then:

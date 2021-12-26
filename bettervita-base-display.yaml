@@ -75,7 +75,7 @@ display:
 
           }
 
-          if (id(ble_battery_level).state < 30.0)
+          if (id(battery_level_low).state)
             icons.push_back(std::make_pair(3, id(icon_battery_alert)));
 
           int time_to_display = 0;

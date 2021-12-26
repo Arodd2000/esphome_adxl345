@@ -75,6 +75,8 @@ binary_sensor:
   - platform: template
     id: temperature_reached
     name: "${name_verbose} Setpoint Reached"
+    on_press:
+      script.execute: rtttl_mario
 
   - platform: gpio
     id: heating_element_feedback
