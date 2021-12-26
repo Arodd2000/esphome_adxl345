@@ -1,3 +1,13 @@
+substitions:
+  pin_ntc_vcc: GPIO26
+  pin_ntc_adc: GPIO34
+  pin_vcc_adc: GPIO32
+  pin_battery_voltage: GPIO33
+  pin_kettle_in_base: GPIO13
+  attenuation_ntc_adc: auto
+  attenuation_vcc_adc: 2.5db
+  attenuation_battery_voltage: 2.5db
+
 interval:
   - interval: 100ms
     then:
@@ -9,14 +19,14 @@ interval:
 sensor:
   - platform: adc
     id: ntc_adc
-    pin: GPIO34
-    attenuation: auto
+    pin: ${pin_ntc_adc}
+    attenuation: ${attenuation_ntc_adc}
     update_interval: never
 
   - platform: adc
     id: vcc_adc
-    pin: GPIO32
-    attenuation: 2.5db
+    pin: ${pin_vcc_adc}
+    attenuation: ${attenuation_vcc_adc}
     update_interval: never
     filters:
       multiply: 3.0
@@ -49,8 +59,8 @@ sensor:
   - platform: adc
     id: battery_voltage
     name: "${name_verbose} Battery Voltage"
-    pin: GPIO33
-    attenuation: 11db
+    pin: ${pin_battery_voltage}
+    attenuation: ${attenuation_battery_voltage}
     update_interval: 60s
     filters:
       - calibrate_linear:
@@ -78,11 +88,10 @@ sensor:
     unit_of_measurement: "%"
     device_class: "battery"
 
-
 switch:
   - platform: gpio
     id: ntc_vcc
-    pin: GPIO26
+    pin: ${pin_ntc_vcc}
 
 binary_sensor:
   - platform: gpio
@@ -90,8 +99,9 @@ binary_sensor:
     name: "${name_verbose} Docked"
     device_class: plug
     pin:
-      number: GPIO13
+      number: ${pin_kettle_in_base}
       mode:
         input: true
         pulldown: true
       inverted: false
+

@@ -1,8 +1,19 @@
+substitutions:
+  pin_heating_element: GPIO32
+  pwm_period_heating_element: 5.0s
+  pin_heating_element_feedback: GPIO21
+
+  pid_kp: "0.15"
+  pid_ki: "0.0"
+  pid_kd: "0.0"
+
+  timeout_to_idle: 5min
+
 output:
   - platform: slow_pwm
-    pin: GPIO32
+    pin: ${pin_heating_element}
     id: heating_element
-    period: 5.0s
+    period: ${pwm_period_heating_element}
 
 select:
   - platform: template
@@ -37,7 +48,7 @@ interval:
       if:
         condition:
           for:
-            time: 5min
+            time: ${timeout_to_idle}
             condition:
               - lambda: return !id(kettle_mode).state.compare("standby");
               - not:
@@ -61,9 +72,9 @@ climate:
       max_temperature: 99.0
       temperature_step: 1.0
     control_parameters:
-      kp: 0.15
-      ki: 0.0
-      kd: 0.0
+      kp: ${pid_kp}
+      ki: ${pid_ki}
+      kd: ${pid_kd}
     on_state:
       lambda: |-
         auto current_profile = id(profile).state;
@@ -80,7 +91,7 @@ binary_sensor:
 
   - platform: gpio
     id: heating_element_feedback
-    pin: GPIO21
+    pin: ${pin_heating_element_feedback}
 
 script:
   - id: script_set_pid_mode

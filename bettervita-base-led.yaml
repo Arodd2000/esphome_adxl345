@@ -1,12 +1,16 @@
+substitutions:
+  pin_output_led_hold: GPIO16
+  pin_led_onoff: GPIO17
+
 output:
   - platform: gpio
     id: output_led_hold
-    pin: GPIO16
+    pin: ${pin_output_led_hold}
 
 light:
   - platform: status_led
     id: led_onoff
-    pin: GPIO17
+    pin: ${pin_led_onoff}
 
   - platform: binary
     id: led_hold

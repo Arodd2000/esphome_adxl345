@@ -1,8 +1,16 @@
+substitutions:
+  pin_button_onoff: GPIO05
+  pin_button_hold: GPIO18
+  pin_button_menu: GPIO13
+  pin_button_timer: GPIO26
+  pin_button_plus: GPIO19
+  pin_button_minus: GPIO23
+
 binary_sensor:
   - platform: gpio
     id: button_onoff
     pin:
-      number: GPIO05
+      number: ${pin_button_onoff}
       inverted: true
       mode:
         input: true
@@ -36,7 +44,7 @@ binary_sensor:
   - platform: gpio
     id: button_hold
     pin:
-      number: GPIO018
+      number: ${pin_button_hold}
       inverted: true
       mode:
         input: true
@@ -61,7 +69,7 @@ binary_sensor:
   - platform: gpio
     id: button_menu
     pin:
-      number: GPIO13
+      number: ${pin_button_menu}
       inverted: true
       mode:
         input: true
@@ -103,7 +111,7 @@ binary_sensor:
   - platform: gpio
     id: button_timer
     pin:
-      number: GPIO26
+      number: ${pin_button_timer}
       inverted: true
       mode:
         input: true
@@ -130,7 +138,7 @@ binary_sensor:
   - platform: gpio
     id: button_plus
     pin:
-      number: GPIO19
+      number: ${pin_button_plus}
       inverted: true
       mode:
         input: true
@@ -152,7 +160,7 @@ binary_sensor:
   - platform: gpio
     id: button_minus
     pin:
-      number: GPIO23
+      number: ${pin_button_minus}
       inverted: true
       mode:
         input: true

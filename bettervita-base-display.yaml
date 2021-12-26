@@ -1,7 +1,12 @@
+substitutions:
+  pin_display_i2c_sda: GPIO25
+  pin_display_i2c_scl: GPIO22
+  period_display_icons: "2500"
+
 i2c:
   id: display_i2c
-  sda: GPIO25
-  scl: GPIO22
+  sda: ${pin_display_i2c_sda}
+  scl: ${pin_display_i2c_scl}
   scan: false
   frequency: 800kHz
 
@@ -102,7 +107,7 @@ display:
             slices_required += ic->first;
           }
 
-          int current_slice = (millis() / (2500 / slices_required)) % slices_required;
+          int current_slice = (millis() / (${period_display_icons} / slices_required)) % slices_required;
 
           int slice_offset = 0;
           for (auto ic = icons.begin(); ic != icons.end(); ic++) {

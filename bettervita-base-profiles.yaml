@@ -1,3 +1,11 @@
+substitutions:
+  profile_coffee_temperature: "96.0"
+  profile_coffee_timer: "240.0"
+  profile_black_tea_temperature: "90.0"
+  profile_black_tea_timer: "200.0"
+  profile_green_tea_temperature: "60.0"
+  profile_green_tea_timer: "180.0"
+
 globals:
   - id: profile_general_temperature
     type: float
@@ -43,13 +51,13 @@ select:
             then:
               - climate.control:
                   id: temperature_pid
-                  target_temperature: 96.0
+                  target_temperature: ${profile_coffee_temperature}
               - select.set:
                   id: timer_direction
                   option: Count Down
               - number.set:
                   id: timer_default_value
-                  value: 240.0
+                  value: ${profile_coffee_timer}
 
         - if:
             condition:
@@ -57,13 +65,13 @@ select:
             then:
               - climate.control:
                   id: temperature_pid
-                  target_temperature: 90.0
+                  target_temperature: ${profile_black_tea_temperature}
               - select.set:
                   id: timer_direction
                   option: Count Down
               - number.set:
                   id: timer_default_value
-                  value: 180.0
+                  value: ${profile_black_tea_timer}
 
         - if:
             condition:
@@ -71,11 +79,11 @@ select:
             then:
               - climate.control:
                   id: temperature_pid
-                  target_temperature: 60.0
+                  target_temperature: ${profile_green_tea_temperature}
               - select.set:
                   id: timer_direction
                   option: Count Down
               - number.set:
                   id: timer_default_value
-                  value: 180.0
+                  value: ${profile_green_tea_timer}
 

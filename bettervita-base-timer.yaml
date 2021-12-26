@@ -96,6 +96,7 @@ script:
                   - binary_sensor.template.publish:
                       id: timer_reached
                       state: true
+
             - if:
                 condition:
                   - lambda: return id(timer_value).state <= 0.0;
@@ -150,5 +151,4 @@ script:
           script.stop: timer_start
         else:
           script.execute: timer_start
-
 
