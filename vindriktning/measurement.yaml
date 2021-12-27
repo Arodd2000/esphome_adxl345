@@ -1,0 +1,47 @@
+substitutions:
+  normal_mode_interval: 30s
+  quiet_mode_interval: 75s
+  quiet_mode_fan_prerun: 15s
+
+time:
+  platform: sntp
+
+switch:
+  - platform: template
+    id: switch_quiet_mode
+    name: "${name_verbose} Quiet Mode"
+    optimistic: true
+    icon: "mdi:power-sleep"
+    on_turn_on:
+      switch.turn_on: switch_fan_override
+    on_turn_off:
+      switch.turn_off: switch_fan_override
+
+interval:
+  - interval: ${normal_mode_interval}
+    then:
+      if:
+        condition:
+          switch.is_off: switch_quiet_mode
+        then:
+          - script.execute: measure_sensors
+
+  - interval: ${quiet_mode_interval}
+    then:
+      if:
+        condition:
+          switch.is_on: switch_quiet_mode
+        then:
+          - switch.turn_off: switch_fan_override
+          - delay: ${quiet_mode_fan_prerun}
+          - script.execute: measure_sensors
+          - switch.turn_on: switch_fan_override
+
+script:
+  - id: measure_sensors
+    then:
+      - component.update: mhz19_sensor
+      - component.update: ccs811_sensor
+        #- component.update: pm1006_sensor
+      - lambda: id(pm1006_sensor).update();
+      - script.execute: set_leds

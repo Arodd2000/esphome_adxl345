@@ -1,0 +1,50 @@
+substitutions:
+  pin_pm1006_fan: GPIO14
+  frequency_pm1006_fan: 5kHz
+  speed_default_pm1006_fan: "100.0"
+
+output:
+  - platform: esp8266_pwm
+    id: pm1006_fan
+    pin: ${pin_pm1006_fan}
+    frequency: ${frequency_pm1006_fan}
+
+number:
+  - platform: template
+    id: fan_speed
+    name: "${name_verbose} Fan Speed"
+    min_value: 0.0
+    max_value: 100.0
+    step: 1.0
+    optimistic: true
+    initial_value: ${speed_default_pm1006_fan}
+    restore_value: true
+    update_interval: never
+    unit_of_measurement: "%"
+    icon: "mdi:fan"
+    mode: "slider"
+    on_value:
+      script.execute: set_fan_speed
+
+switch:
+  - platform: template
+    id: switch_fan_override
+    optimistic: true
+    on_turn_on:
+      script.execute: set_fan_speed
+    on_turn_off:
+      script.execute: set_fan_speed
+
+script:
+  - id: set_fan_speed
+    then:
+      if:
+        condition:
+          switch.is_on: switch_fan_override
+        then:
+          output.turn_off: pm1006_fan
+        else:
+          output.set_level:
+            id: pm1006_fan
+            level: !lambda return id(fan_speed).state / 100.0;
+

@@ -1,0 +1,152 @@
+substitutions:
+  pin_mhz19_uart_rx: GPIO03
+  pin_mhz19_uart_tx: GPIO01
+  pin_pm1006_uart_rx: GPIO05
+  pin_pm1006_uart_tx: GPIO04
+  pin_ccs811_i2c_sda: GPIO0
+  pin_ccs811_i2c_scl: GPIO02
+
+globals:
+  - id: ccs811_baseline
+    type: int
+    restore_value: true
+    initial_value: '0.0'
+
+esphome:
+  on_boot:
+    then:
+      - logger.log:
+          format: "Loading baseline: 0x%04X"
+          args:
+            - id(ccs811_baseline)
+      - lambda: |-
+          if (id(ccs811_baseline)) {
+            id(ccs811_sensor).set_baseline(id(ccs811_baseline));
+            id(ccs811_sensor).write_bytes(0x11, decode_value((uint16_t)id(ccs811_baseline)));
+          }
+      - switch.turn_off: switch_fan_override
+      - switch.turn_off: switch_quiet_mode
+      - switch.turn_on: switch_leds_active
+
+uart:
+  - id: mhz19_uart
+    rx_pin: ${pin_mhz19_uart_rx}
+    tx_pin: ${pin_mhz19_uart_tx}
+    baud_rate: 9600
+
+  - id: pm1006_uart
+    rx_pin: ${pin_pm1006_uart_rx}
+    tx_pin: ${pin_pm1006_uart_tx}
+    baud_rate: 9600
+
+i2c:
+  - id: ccs811_i2c
+    sda: ${pin_ccs811_i2c_sda}
+    scl: ${pin_ccs811_i2c_scl}
+    scan: false
+
+sensor:
+  - platform: mhz19
+    id: mhz19_sensor
+    uart_id: mhz19_uart
+    co2:
+      id: mhz19_co2_sensor
+      name: "${name_verbose} CO2"
+      filters:
+        - lambda: return x + id(mhz19_co2_sensor_offset).state;
+    automatic_baseline_calibration: false
+    update_interval: never
+
+  - platform: ccs811
+    id: ccs811_sensor
+    i2c_id: ccs811_i2c
+    eco2:
+      id: ccs811_eco2_sensor
+      name: "${name_verbose} eCO2"
+      filters:
+        - lambda: return x + id(ccs811_eco2_sensor_offset).state;
+    tvoc:
+      id: ccs811_tvoc_sensor
+      name: "${name_verbose} TVOC"
+      icon: "mdi:emoticon-poop"
+      filters:
+        - lambda: return x + id(ccs811_tvoc_sensor_offset).state;
+    update_interval: never
+
+  - platform: pm1006
+    id: pm1006_sensor
+    uart_id: pm1006_uart
+    pm_2_5:
+      id: pm1006_pm_sensor
+      name: "${name_verbose} 2.5μm Particles"
+      filters:
+        - lambda: return x + id(pm1006_pm_sensor_offset).state;
+    update_interval: never
+
+  - platform: adc
+    pin: A0
+    name: "${name_verbose} Photodiode"
+    update_interval: 10s
+    icon: "mdi:brightness-6"
+
+number:
+  - platform: template
+    id: mhz19_co2_sensor_offset
+    name: "${name_verbose} CO2 Offset"
+    min_value: -1000.0
+    max_value: +1000.0
+    step: 1.0
+    optimistic: true
+    initial_value: 0.0
+    restore_value: true
+    unit_of_measurement: "ppm"
+    icon: "mdi:molecule-co2"
+    entity_category: "config"
+    on_value:
+      script.execute: measure_sensors
+
+  - platform: template
+    id: ccs811_eco2_sensor_offset
+    name: "${name_verbose} eCO2 Offset"
+    min_value: -1000.0
+    max_value: +1000.0
+    step: 1.0
+    optimistic: true
+    initial_value: 0.0
+    restore_value: true
+    unit_of_measurement: "ppm"
+    icon: "mdi:molecule-co2"
+    entity_category: "config"
+    on_value:
+      script.execute: measure_sensors
+
+  - platform: template
+    id: ccs811_tvoc_sensor_offset
+    name: "${name_verbose} TVOC Offset"
+    min_value: -1000.0
+    max_value: +1000.0
+    step: 1.0
+    optimistic: true
+    initial_value: 0.0
+    restore_value: true
+    unit_of_measurement: "ppb"
+    icon: "mdi:emoticon-poop"
+    entity_category: "config"
+    on_value:
+      script.execute: measure_sensors
+
+  - platform: template
+    id: pm1006_pm_sensor_offset
+    name: "${name_verbose} PM Offset"
+    min_value: -1000.0
+    max_value: +1000.0
+    step: 1.0
+    optimistic: true
+    initial_value: 0.0
+    restore_value: true
+    unit_of_measurement: "μg/m³"
+    icon: "mdi:blur"
+    entity_category: "config"
+    on_value:
+      script.execute: measure_sensors
+

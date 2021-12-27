@@ -1,0 +1,28 @@
+esphome:
+  name: ${name}
+
+api:
+  services:
+    - service: update_ccs811_baseline
+      variables:
+        baseline: int
+      then:
+        - logger.log:
+            format: "New baseline: 0x%04X"
+            args:
+              - id(ccs811_baseline)
+        - lambda: |-
+            id(ccs811_baseline) = baseline;
+            id(ccs811_sensor).set_baseline(id(ccs811_baseline));
+            id(ccs811_sensor).write_bytes(0x11, decode_value((uint16_t)id(ccs811_baseline)));
+
+esp8266:
+  board: esp01_1m
+
+logger:
+  baud_rate: 0
+
+button:
+  - platform: restart
+    name: "${name_verbose} Restart"
+

@@ -1,0 +1,101 @@
+esp8266:
+  restore_from_flash: true
+
+button:
+  - platform: template
+    name: "${name_verbose} Calibrate MHZ19"
+    on_press:
+      - mhz19.calibrate_zero: mhz19_sensor
+    entity_category: "config"
+
+number:
+  - platform: template
+    id: co2_warn_level
+    name: "${name_verbose} CO2 Warn Level"
+    min_value: 0.0
+    max_value: 50000.0
+    step: 1.0
+    optimistic: true
+    restore_value: true
+    update_interval: never
+    unit_of_measurement: "ppm"
+    icon: "mdi:alert-octagon-outline"
+    entity_category: "config"
+    on_value:
+      script.execute: set_leds
+
+  - platform: template
+    id: co2_critical_level
+    name: "${name_verbose} CO2 Critical Level"
+    min_value: 0.0
+    max_value: 50000.0
+    step: 1.0
+    optimistic: true
+    restore_value: true
+    update_interval: never
+    unit_of_measurement: "ppm"
+    icon: "mdi:alert-decagram-outline"
+    entity_category: "config"
+    on_value:
+      script.execute: set_leds
+
+  - platform: template
+    id: pm_warn_level
+    name: "${name_verbose} PM Warn Level"
+    min_value: 0.0
+    max_value: 50000.0
+    step: 1.0
+    optimistic: true
+    restore_value: true
+    update_interval: never
+    unit_of_measurement: "μg/m³"
+    icon: "mdi:alert-octagon-outline"
+    entity_category: "config"
+    on_value:
+      script.execute: set_leds
+
+  - platform: template
+    id: pm_critical_level
+    name: "${name_verbose} PM Critical Level"
+    min_value: 0.0
+    max_value: 50000.0
+    step: 1.0
+    optimistic: true
+    restore_value: true
+    update_interval: never
+    unit_of_measurement: "μg/m³"
+    icon: "mdi:alert-decagram-outline"
+    entity_category: "config"
+    on_value:
+      script.execute: set_leds
+
+  - platform: template
+    id: tvoc_warn_level
+    name: "${name_verbose} TVOC Warn Level"
+    min_value: 0.0
+    max_value: 50000.0
+    step: 1.0
+    optimistic: true
+    restore_value: true
+    update_interval: never
+    unit_of_measurement: "ppb"
+    icon: "mdi:alert-octagon-outline"
+    entity_category: "config"
+    on_value:
+      script.execute: set_leds
+
+  - platform: template
+    id: tvoc_critical_level
+    name: "${name_verbose} TVOC Critical Level"
+    min_value: 0.0
+    max_value: 50000.0
+    step: 1.0
+    optimistic: true
+    restore_value: true
+    update_interval: never
+    unit_of_measurement: "ppb"
+    icon: "mdi:alert-decagram-outline"
+    entity_category: "config"
+    on_value:
+      script.execute: set_leds
+
