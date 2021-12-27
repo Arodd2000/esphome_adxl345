@@ -12,3 +12,4 @@ packages:
   hardware_fan: !include hardware-fan.yaml
   config_services_misc: !include configuration-services-misc.yaml
   measurement: !include measurement.yaml
+  alert: !include alert.yaml

@@ -93,21 +93,9 @@ script:
         condition:
           - switch.is_on: switch_leds_active
           - or:
-            - and:
-              - number.in_range:
-                  id: co2_critical_level
-                  above: 0.1
-              - lambda: return id(mhz19_co2_sensor).state >= id(co2_critical_level).state;
-            - and:
-              - number.in_range:
-                  id: pm_critical_level
-                  above: 0.1
-              - lambda: return id(pm1006_pm_sensor).state >= id(pm_critical_level).state;
-            - and:
-              - number.in_range:
-                  id: tvoc_critical_level
-                  above: 0.1
-              - lambda: return id(ccs811_tvoc_sensor).state >= id(tvoc_critical_level).state;
+            - binary_sensor.is_on: co2_critical_active
+            - binary_sensor.is_on: tvoc_critical_active
+            - binary_sensor.is_on: pm_critical_active
         then:
           - switch.turn_off: switch_led_orange
           - switch.turn_on: switch_led_red
@@ -118,21 +106,9 @@ script:
             condition:
               - switch.is_on: switch_leds_active
               - or:
-                - and:
-                  - number.in_range:
-                      id: co2_warn_level
-                      above: 0.1
-                  - lambda: return id(mhz19_co2_sensor).state >= id(co2_warn_level).state;
-                - and:
-                  - number.in_range:
-                      id: pm_warn_level
-                      above: 0.1
-                  - lambda: return id(pm1006_pm_sensor).state >= id(pm_warn_level).state;
-                - and:
-                  - number.in_range:
-                      id: tvoc_warn_level
-                      above: 0.1
-                  - lambda: return id(ccs811_tvoc_sensor).state >= id(tvoc_warn_level).state;
+                - binary_sensor.is_on: co2_warn_active
+                - binary_sensor.is_on: tvoc_warn_active
+                - binary_sensor.is_on: pm_warn_active
             then:
               - switch.turn_off: switch_led_green
               - switch.turn_off: switch_led_red

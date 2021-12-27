@@ -44,4 +44,3 @@ script:
       - component.update: ccs811_sensor
         #- component.update: pm1006_sensor
       - lambda: id(pm1006_sensor).update();
-      - script.execute: set_leds
