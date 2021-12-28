@@ -84,7 +84,7 @@ display:
             icons.push_back(std::make_pair(3, id(icon_battery_alert)));
 
           int time_to_display = 0;
-          if (id(timer_start).is_running() || id(timer_value).state != 0.0)
+          if (id(timer_active).state || id(timer_value).state != 0.0)
             time_to_display = (int)id(timer_value).state;
           else
             time_to_display = (int)id(timer_default_value).state;
@@ -97,7 +97,7 @@ display:
           if (id(timer_reached).state) {
             icons.push_back(std::make_pair(1, id(icon_timer)));
 
-            if (id(timer_start).is_running()) {
+            if (id(timer_active).state) {
               it.print(50, 54, id(ttf12), TextAlign::BOTTOM_LEFT, "+");
             }
           }

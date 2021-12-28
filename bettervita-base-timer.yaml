@@ -59,6 +59,12 @@ binary_sensor:
       script.execute: rtttl_beep
 
   - platform: template
+    id: timer_active
+    name: "${name_verbose} Timer Active"
+    icon: "mdi:timer-outline"
+    lambda: return id(timer_start).is_running();
+
+  - platform: template
     id: timer_counts_up
 
 script:

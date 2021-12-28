@@ -67,19 +67,17 @@ select:
 interval:
   - interval: 10s
     then:
-      if:
-        condition:
-          for:
-            time: ${timeout_to_idle}
-            condition:
-              - lambda: return !id(kettle_mode).state.compare("standby");
-              - not:
-                  script.is_running: timer_start
-
-        then:
-          select.set:
-            id: kettle_mode
-            option: idle
+      - if:
+          condition:
+            for:
+              time: ${timeout_to_idle}
+              condition:
+                - lambda: return !id(kettle_mode).state.compare("standby");
+                - binary_sensor.is_off: timer_active
+          then:
+            - select.set:
+                id: kettle_mode
+                option: idle
 
 climate:
   - platform: pid
