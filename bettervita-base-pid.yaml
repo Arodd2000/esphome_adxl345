@@ -42,19 +42,27 @@ select:
     optimistic: true
     initial_option: standby
     on_value:
-      if:
-        condition:
-          lambda: return !id(kettle_mode).state.compare("idle");
-        then:
-          - binary_sensor.template.publish:
-              id: temperature_reached
-              state: false
-          - display.page.show:
-              id: display_off
-          - script.execute: timer_reset
-        else:
-          display.page.show:
-            id: main_page
+      - if:
+          condition:
+            lambda: return !id(kettle_mode).state.compare("idle");
+          then:
+            - binary_sensor.template.publish:
+                id: temperature_reached
+                state: false
+            - display.page.show:
+                id: display_off
+            - script.execute: timer_reset
+          else:
+            display.page.show:
+              id: main_page
+
+      - if:
+          condition:
+            lambda: return !id(kettle_mode).state.compare("standby");
+          then:
+            - binary_sensor.template.publish:
+                id: temperature_reached
+                state: false
 
 interval:
   - interval: 10s
