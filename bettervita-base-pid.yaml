@@ -135,6 +135,7 @@ sensor:
   - platform: total_daily_energy
     name: "${name_verbose} Daily Energy"
     power_id: power
+    method: left
     unit_of_measurement: "kWh"
     accuracy_decimals: 3
     filters:
