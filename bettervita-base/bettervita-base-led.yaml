@@ -1,6 +1,6 @@
 substitutions:
-  pin_output_led_hold: GPIO16
-  pin_led_onoff: GPIO17
+  pin_output_led_hold: GPIO17
+  pin_led_onoff: GPIO16
 
 output:
   - platform: gpio
