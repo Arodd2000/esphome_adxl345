@@ -151,7 +151,7 @@ script:
         bool is_kettle_in_base = id(kettle_in_base).state;
         bool is_kettle_mode_active = id(kettle_mode).state.compare("standby") && id(kettle_mode).state.compare("idle");
 
-        bool is_kettle_mode_hold = !id(kettle_mode).state.compare("heat up & hold");
+        bool is_kettle_mode_hold = id(kettle_mode).state == "heat up & hold" ;
 
         float target_temperature = id(temperature_pid).target_temperature;
         float current_temperature = id(temperature_pid).current_temperature;
@@ -192,7 +192,7 @@ script:
         if (is_kettle_mode_hold && !id(led_hold).current_values.is_on()) {
           auto call = id(led_hold).turn_on();
           call.perform();
-        } else if (!is_kettle_mode_active && id(led_hold).current_values.is_on()) {
+        } else if (!is_kettle_mode_hold && id(led_hold).current_values.is_on()) {
           auto call = id(led_hold).turn_off();
           call.perform();
         }
