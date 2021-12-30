@@ -38,6 +38,9 @@ image:
   - file: 'icons/home-assistant-whitebg.png'
     id: icon_home_assistant
 
+  - file: 'icons/wifi-alert-whitebg.png'
+    id: icon_wifi_alert
+
 display:
   - platform: ssd1306_i2c
     id: main_display
@@ -106,6 +109,9 @@ display:
 
           if (!id(native_api).is_connected())
             icons.push_back(std::make_pair(1, id(icon_home_assistant)));
+
+          if (!id(wifi_component).is_connected())
+            icons.push_back(std::make_pair(1, id(icon_wifi_alert)));
 
           int slices_required = 0;
           for (auto ic = icons.begin(); ic != icons.end(); ic++) {
