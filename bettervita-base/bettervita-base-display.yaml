@@ -35,6 +35,9 @@ image:
   - file: 'icons/timer-outline-whitebg.png'
     id: icon_timer
 
+  - file: 'icons/home-assistant-whitebg.png'
+    id: icon_home_assistant
+
 display:
   - platform: ssd1306_i2c
     id: main_display
@@ -89,7 +92,6 @@ display:
           else
             time_to_display = (int)id(timer_default_value).state;
 
-
           int minutes = time_to_display / 60;
           int seconds = time_to_display % 60;
           it.printf(2, 54, id(ttf12), TextAlign::BOTTOM_LEFT, "%02i:%02i", minutes, seconds);
@@ -101,6 +103,9 @@ display:
               it.print(50, 54, id(ttf12), TextAlign::BOTTOM_LEFT, "+");
             }
           }
+
+          if (!id(native_api).is_connected())
+            icons.push_back(std::make_pair(1, id(icon_home_assistant)));
 
           int slices_required = 0;
           for (auto ic = icons.begin(); ic != icons.end(); ic++) {

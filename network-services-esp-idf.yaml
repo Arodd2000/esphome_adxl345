@@ -2,6 +2,7 @@ wifi:
   networks: !secret known_networks
 
 api:
+  id: native_api
 
 ota:
 

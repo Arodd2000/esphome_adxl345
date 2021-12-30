@@ -8,6 +8,7 @@ wifi:
 captive_portal:
 
 api:
+  id: native_api
 
 ota:
 
