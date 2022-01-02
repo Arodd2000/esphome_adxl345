@@ -1,3 +1,7 @@
+substitutions:
+  disable_ccs811: "false"
+  disable_mhz19: "false"
+
 binary_sensor:
   - platform: template
     id: co2_warn_active
@@ -109,6 +113,7 @@ text_sensor:
       else if (warn)
         return {"warn"};
       return {""};
+    disabled_by_default: ${disable_mhz19}
 
   - platform: template
     id: tvoc_alert
@@ -123,6 +128,7 @@ text_sensor:
       else if (warn)
         return {"warn"};
       return {""};
+    disabled_by_default: ${disable_ccs811}
 
   - platform: template
     id: pm_alert

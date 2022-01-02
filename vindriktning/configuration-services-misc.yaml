@@ -1,3 +1,7 @@
+substitutions:
+  disable_ccs811: "false"
+  disable_mhz19: "false"
+
 esp8266:
   restore_from_flash: true
 
@@ -21,6 +25,7 @@ number:
     unit_of_measurement: "ppm"
     icon: "mdi:alert-octagon-outline"
     entity_category: "config"
+    disabled_by_default: ${disable_mhz19}
 
   - platform: template
     id: co2_critical_level
@@ -34,6 +39,7 @@ number:
     unit_of_measurement: "ppm"
     icon: "mdi:alert-decagram-outline"
     entity_category: "config"
+    disabled_by_default: ${disable_mhz19}
 
   - platform: template
     id: pm_warn_level
@@ -73,6 +79,7 @@ number:
     unit_of_measurement: "ppb"
     icon: "mdi:alert-octagon-outline"
     entity_category: "config"
+    disabled_by_default: ${disable_ccs811}
 
   - platform: template
     id: tvoc_critical_level
@@ -86,4 +93,5 @@ number:
     unit_of_measurement: "ppb"
     icon: "mdi:alert-decagram-outline"
     entity_category: "config"
+    disabled_by_default: ${disable_ccs811}
 
