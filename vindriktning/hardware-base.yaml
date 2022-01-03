@@ -10,7 +10,7 @@ api:
         - logger.log:
             format: "New baseline: 0x%04X"
             args:
-              - id(ccs811_baseline)
+              - baseline
         - lambda: |-
             id(ccs811_baseline) = baseline;
             id(ccs811_sensor).set_baseline(id(ccs811_baseline));
