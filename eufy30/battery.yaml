@@ -1,0 +1,49 @@
+substitutions:
+  battery_calibration_lower: 0.0 -> 0.0
+  battery_calibration_upper: 0.91 -> 17.0
+
+sensor:
+  - platform: adc
+    name: ${name_verbose} Battery Voltage
+    id: battery_voltage
+    pin: A0
+    update_interval: 30s
+    accuracy_decimals: 1
+    unit_of_measurement: V
+    device_class: voltage
+    filters:
+      calibrate_linear:
+        - ${battery_calibration_lower}
+        - ${battery_calibration_upper}
+
+  - platform: template
+    id: battery_level
+    name: ${name_verbose} Battery Level
+    update_interval: 30s
+    accuracy_decimals: 0
+    unit_of_measurement: "%"
+    device_class: battery
+    lambda: |-
+      float voltage = id(battery_voltage).state;
+      if (voltage >= 16.8) {
+        return 100.0;
+      } else if (voltage < 16.8 && voltage > 13.6) {
+        return 31.25 * voltage - 425.0;
+      } else {
+        return 0.0;
+      }
+
+binary_sensor:
+  - platform: template
+    name: ${name_verbose} Battery State
+    device_class: battery
+    lambda: |-
+      float level = id(battery_level).state;
+      if (level >= 80.0) {
+        return false;
+      } else if (level <= 20.0) {
+        return true;
+      } else {
+        return {};
+      }
+
