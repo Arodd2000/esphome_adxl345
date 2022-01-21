@@ -56,7 +56,14 @@ binary_sensor:
     name: "${name_verbose} Timer Reached"
     icon: "mdi:timer-outline"
     on_press:
-      script.execute: rtttl_beep
+      - script.execute: rtttl_beep
+      - if:
+          condition:
+            lambda: return !id(kettle_mode).state.compare("heat up & hold");
+          then:
+            select.set:
+              id: kettle_mode
+              option: "standby"
 
   - platform: template
     id: timer_active
