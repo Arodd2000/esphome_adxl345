@@ -37,7 +37,6 @@ sensor:
 
   - platform: resistance
     id: ntc_res
-    name: "${name_verbose} NTC Resistance"
     sensor: ntc_adc
     configuration: DOWNSTREAM
     resistor: 330kOhm
@@ -49,7 +48,6 @@ sensor:
 
   - platform: ntc
     id: water_temperature
-    name: "${name_verbose} Kettle Temperature"
     sensor: ntc_res
     calibration:
       - 7.675 kOhm -> 96.4°C
@@ -60,7 +58,6 @@ sensor:
 
   - platform: adc
     id: battery_voltage
-    name: "${name_verbose} Battery Voltage"
     pin: ${pin_battery_voltage}
     attenuation: ${attenuation_battery_voltage}
     update_interval: 60s
@@ -85,7 +82,6 @@ sensor:
 
   - platform: template
     id: battery_level
-    name: "${name_verbose} Battery Level"
     update_interval: never
     unit_of_measurement: "%"
     device_class: "battery"
@@ -98,7 +94,6 @@ switch:
 binary_sensor:
   - platform: gpio
     id: kettle_in_base
-    name: "${name_verbose} Docked"
     device_class: plug
     pin:
       number: ${pin_kettle_in_base}
