@@ -11,6 +11,7 @@ button:
     on_press:
       - mhz19.calibrate_zero: mhz19_sensor
     entity_category: "config"
+    disabled_by_default: ${disable_mhz19}
 
 number:
   - platform: template
