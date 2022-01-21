@@ -7,6 +7,8 @@ substitutions:
   attenuation_ntc_adc: auto
   attenuation_vcc_adc: auto
   attenuation_battery_voltage: auto
+  battery_calibration_lower: 0.0 -> 0.0
+  battery_calibration_upper: 1.856 -> 3.8
 
 interval:
   - interval: 100ms
@@ -64,8 +66,8 @@ sensor:
     update_interval: 60s
     filters:
       - calibrate_linear:
-          - 0.0 -> 0.0
-          - 1.85600 -> 3.8
+          - ${battery_calibration_lower}
+          - ${battery_calibration_upper}
     on_value:
       then:
         - sensor.template.publish:
