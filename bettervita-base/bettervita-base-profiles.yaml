@@ -22,6 +22,7 @@ select:
       - General
       - Coffee
       - Black Tea
+      - Liquorice
       - Green Tea
     on_value:
       then:
@@ -72,6 +73,20 @@ select:
               - number.set:
                   id: timer_default_value
                   value: ${profile_black_tea_timer}
+
+        - if:
+            condition:
+              lambda: return !x.compare("Liquorice");
+            then:
+              - climate.control:
+                  id: temperature_pid
+                  target_temperature: 95.0
+              - select.set:
+                  id: timer_direction
+                  option: Count Down
+              - number.set:
+                  id: timer_default_value
+                  value: 600
 
         - if:
             condition:
