@@ -1,3 +1,7 @@
+substitutions:
+  mains_restore_mode: ALWAYS_OFF
+  usb_restore_mode: ALWAYS_ON
+
 esphome:
   platform: ESP8266
   board: esp8285
@@ -26,7 +30,7 @@ switch:
     id: mains
     name: ${name_verbose} Mains
     pin: GPIO14
-    restore_mode: ALWAYS_OFF
+    restore_mode: ${mains_restore_mode}
     on_turn_on:
       - light.turn_on: led_red
     on_turn_off:
@@ -36,7 +40,7 @@ switch:
     id: usb
     name: ${name_verbose} USB
     pin: GPIO5
-    restore_mode: ALWAYS_ON
+    restore_mode: ${usb_restore_mode}
 
 output:
   - platform: esp8266_pwm
@@ -49,7 +53,7 @@ light:
   - platform: monochromatic
     id: led_red
     output: state_led_red
-    restore_mode: ALWAYS_OFF
+    restore_mode: ${mains_restore_mode}
 
 status_led:
   pin:
