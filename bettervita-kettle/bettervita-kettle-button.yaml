@@ -1,17 +1,17 @@
+substitutions:
+  pin_kettle_button: GPIO19
+  pin_kettle_led: GPIO18
+
 binary_sensor:
   - platform: gpio
     id: kettle_button
     name: ${name_verbose} Button
     pin:
-      number: GPIO19
+      number: ${pin_kettle_button}
       inverted: true
       mode:
         input: true
         pullup: true
-
-          #    on_state:
-          #      - light.toggle:
-          #          id: kettle_led
 
 light:
   - platform: binary
@@ -29,4 +29,4 @@ switch:
 output:
   - platform: gpio
     id: kettle_led_output
-    pin: GPIO18
+    pin: ${pin_kettle_led}
