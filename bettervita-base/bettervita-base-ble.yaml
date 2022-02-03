@@ -31,6 +31,10 @@ binary_sensor:
             id: kettle_mode
             option: standby
 
+  - platform: template
+    id: kettle_button
+    name: ${name_verbose} Kettle Button
+
 sensor:
   - platform: ble_client
     ble_client_id: ble_kettle
@@ -83,4 +87,29 @@ sensor:
     device_class: "voltage"
     state_class: "measurement"
     lambda: "return *(float *)(&x[0]);"
+
+  - platform: ble_client
+    id: kettle_button_raw
+    ble_client_id: ble_kettle
+    service_uuid: F2F807C2-5986-436B-8516-092175BE8B61
+    characteristic_uuid: E9A1C076-1EE1-4A21-8F52-9150AD3E4AB6
+    notify: true
+    update_interval: 250ms
+    lambda: |-
+      bool button_pushed = (x[0] != 0);
+      id(kettle_button).publish_state(button_pushed);
+      return x[0];
+
+output:
+  - platform: ble_client
+    id: kettle_led_output
+    ble_client_id: ble_kettle
+    service_uuid: F2F807C2-5986-436B-8516-092175BE8B61
+    characteristic_uuid: 775C8EF2-7115-4A90-AF3C-7E7F3883C2E7
+
+light:
+  - platform: binary
+    id: kettle_led
+    name: ${name_verbose} Kettle LED
+    output: kettle_led_output
 

@@ -1,13 +1,14 @@
 esphome:
   project:
     name: flobs.bettervita-kettle
-    version: 1.1.0
+    version: 1.2.0
 
 packages:
   device_base: !include device-base.yaml
   network_services: !include network-services.yaml
   bettervita_sensors: !include bettervita-kettle/bettervita-kettle-sensors.yaml
   bettervita_ble: !include bettervita-kettle/bettervita-kettle-ble.yaml
+  bettervita_button: !include bettervita-kettle/bettervita-kettle-button.yaml
 
 esp32:
   board: esp32dev
