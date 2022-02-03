@@ -12,11 +12,6 @@ binary_sensor:
         input: true
         pullup: true
 
-light:
-  - platform: binary
-    id: kettle_led
-    output: kettle_led_output
-
 switch:
   - platform: output
     id: kettle_led_switch
