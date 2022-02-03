@@ -5,7 +5,6 @@ substitutions:
 binary_sensor:
   - platform: gpio
     id: kettle_button
-    name: ${name_verbose} Button
     pin:
       number: ${pin_kettle_button}
       inverted: true
@@ -16,13 +15,11 @@ binary_sensor:
 light:
   - platform: binary
     id: kettle_led
-    name: ${name_verbose} Button LED
     output: kettle_led_output
 
 switch:
   - platform: output
     id: kettle_led_switch
-    name: ${name_verbose} Button LED Switch
     output: kettle_led_output
     icon: mdi:led-on
 
