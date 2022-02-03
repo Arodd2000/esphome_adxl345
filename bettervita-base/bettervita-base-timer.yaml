@@ -70,6 +70,10 @@ binary_sensor:
     name: "${name_verbose} Timer Active"
     icon: "mdi:timer-outline"
     lambda: return id(timer_start).is_running();
+    on_press:
+      light.turn_on: kettle_led
+    on_release:
+      light.turn_off: kettle_led
 
   - platform: template
     id: timer_counts_up

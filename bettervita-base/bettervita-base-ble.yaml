@@ -34,10 +34,28 @@ binary_sensor:
   - platform: template
     id: kettle_button
     name: ${name_verbose} Kettle Button
+    on_click:
+      script.execute: timer_toggle
+    on_multi_click:
+      - timing:
+          - ON for at least 1s
+        then:
+          script.execute: timer_reset
+
 
   - platform: template
     id: kettle_tilted
     name: ${name_verbose} Kettle Tilted
+    on_press:
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_off: timer_active
+              - binary_sensor.is_off: timer_reached
+              - binary_sensor.is_on: temperature_reached
+              - lambda: return !id(kettle_mode).state.compare("heat up & hold");
+            then:
+              script.execute: timer_toggle
 
 sensor:
   - platform: ble_client
