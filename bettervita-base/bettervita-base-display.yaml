@@ -41,6 +41,9 @@ image:
   - file: 'icons/wifi-alert-whitebg.png'
     id: icon_wifi_alert
 
+  - file: 'icons/kettle-outline-whitebg.png'
+    id: icon_kettle_outline
+
 display:
   - platform: ssd1306_i2c
     id: main_display
@@ -112,6 +115,9 @@ display:
 
           if (!id(wifi_component).is_connected())
             icons.push_back(std::make_pair(1, id(icon_wifi_alert)));
+
+          if (id(ble_kettle).state() != esphome::esp32_ble_tracker::ClientState::ESTABLISHED)
+            icons.push_back(std::make_pair(1, id(icon_kettle_outline)));
 
           int slices_required = 0;
           for (auto ic = icons.begin(); ic != icons.end(); ic++) {
