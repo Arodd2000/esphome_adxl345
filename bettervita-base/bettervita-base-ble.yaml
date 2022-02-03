@@ -35,6 +35,10 @@ binary_sensor:
     id: kettle_button
     name: ${name_verbose} Kettle Button
 
+  - platform: template
+    id: kettle_tilted
+    name: ${name_verbose} Kettle Tilted
+
 sensor:
   - platform: ble_client
     ble_client_id: ble_kettle
@@ -98,6 +102,18 @@ sensor:
     lambda: |-
       bool button_pushed = (x[0] != 0);
       id(kettle_button).publish_state(button_pushed);
+      return x[0];
+
+  - platform: ble_client
+    id: kettle_tilted_raw
+    ble_client_id: ble_kettle
+    service_uuid: ABFE4264-1A3E-40E6-890C-2B96FF4788CA
+    characteristic_uuid: 4147E8E1-05D1-474D-8314-22FD95DC7330
+    notify: true
+    update_interval: 1s
+    lambda: |-
+      bool is_kettle_tilted = (x[0] != 0);
+      id(kettle_tilted).publish_state(is_kettle_tilted);
       return x[0];
 
 output:

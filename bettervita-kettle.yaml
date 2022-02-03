@@ -9,6 +9,7 @@ packages:
   bettervita_sensors: !include bettervita-kettle/bettervita-kettle-sensors.yaml
   bettervita_ble: !include bettervita-kettle/bettervita-kettle-ble.yaml
   bettervita_button: !include bettervita-kettle/bettervita-kettle-button.yaml
+  bettervita_tilt: !include bettervita-kettle/bettervita-kettle-tilt.yaml
 
 esp32:
   board: esp32dev

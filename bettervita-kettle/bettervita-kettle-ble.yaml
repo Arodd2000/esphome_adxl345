@@ -24,3 +24,8 @@ esp32_ble_controller:
           exposes: kettle_button
         - characteristic: "775C8EF2-7115-4A90-AF3C-7E7F3883C2E7"
           exposes: kettle_led_switch
+
+    - service: "ABFE4264-1A3E-40E6-890C-2B96FF4788CA"
+      characteristics:
+        - characteristic: "4147E8E1-05D1-474D-8314-22FD95DC7330"
+          exposes: kettle_tilted

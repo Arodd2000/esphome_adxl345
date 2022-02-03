@@ -1,0 +1,16 @@
+substitutions:
+  pin_kettle_tilted: GPIO23
+
+binary_sensor:
+  - platform: gpio
+    id: kettle_tilted
+    pin:
+      number: ${pin_kettle_tilted}
+      mode:
+        input: true
+        pullup: false
+        pulldown: false
+    filters:
+      - delayed_on: 250ms
+      - delayed_off: 250ms
+
