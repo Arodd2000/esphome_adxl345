@@ -10,7 +10,4 @@ binary_sensor:
         input: true
         pullup: false
         pulldown: false
-    filters:
-      - delayed_on: 250ms
-      - delayed_off: 250ms
 

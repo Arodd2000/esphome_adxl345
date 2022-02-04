@@ -1,7 +1,7 @@
 esphome:
   project:
     name: flobs.bettervita-kettle
-    version: 1.2.0
+    version: 1.2.1
 
 packages:
   device_base: !include device-base.yaml
