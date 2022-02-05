@@ -35,7 +35,18 @@ binary_sensor:
     id: kettle_button
     name: ${name_verbose} Kettle Button
     on_click:
-      script.execute: timer_toggle
+      then:
+        - if:
+            condition:
+              - binary_sensor.is_off: timer_active
+              - binary_sensor.is_off: temperature_reached
+              - lambda: return !id(kettle_mode).state.compare("standby");
+            then:
+              - select.set:
+                  id: kettle_mode
+                  option: heat up & hold
+            else:
+              - script.execute: timer_toggle
     on_multi_click:
       - timing:
           - ON for at least 1s
