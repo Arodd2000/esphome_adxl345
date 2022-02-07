@@ -22,11 +22,11 @@ binary_sensor:
 
         if (is_kettle_mode_active) {
           mode_call.set_option("standby");
-          mode_call.perform();
         } else {
-          mode_call.set_option("heat up & hold");
-          mode_call.perform();
+          auto kettle_mode = id(kettle_mode_hold_on_start) ? "heat up & hold" : "heat up";
+          mode_call.set_option(kettle_mode);
         }
+        mode_call.perform();
     on_press:
       then:
         - delay: 1s

@@ -11,6 +11,10 @@ globals:
     type: float
     restore_value: true
     initial_value: "50.0"
+  - id: kettle_mode_hold_on_start
+    type: bool
+    restore_value: true
+    initial_value: "true"
 
 select:
   - platform: template
@@ -45,6 +49,9 @@ select:
               - number.set:
                   id: timer_default_value
                   value: 0.0
+              - globals.set:
+                  id: kettle_mode_hold_on_start
+                  value: "false"
 
         - if:
             condition:
@@ -59,6 +66,9 @@ select:
               - number.set:
                   id: timer_default_value
                   value: ${profile_coffee_timer}
+              - globals.set:
+                  id: kettle_mode_hold_on_start
+                  value: "true"
 
         - if:
             condition:
@@ -73,6 +83,9 @@ select:
               - number.set:
                   id: timer_default_value
                   value: ${profile_black_tea_timer}
+              - globals.set:
+                  id: kettle_mode_hold_on_start
+                  value: "true"
 
         - if:
             condition:
@@ -87,6 +100,9 @@ select:
               - number.set:
                   id: timer_default_value
                   value: 600
+              - globals.set:
+                  id: kettle_mode_hold_on_start
+                  value: "true"
 
         - if:
             condition:
@@ -101,4 +117,7 @@ select:
               - number.set:
                   id: timer_default_value
                   value: ${profile_green_tea_timer}
+              - globals.set:
+                  id: kettle_mode_hold_on_start
+                  value: "true"
 

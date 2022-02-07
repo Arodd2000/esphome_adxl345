@@ -44,7 +44,8 @@ binary_sensor:
             then:
               - select.set:
                   id: kettle_mode
-                  option: heat up & hold
+                  option: !lambda |-
+                    return id(kettle_mode_hold_on_start) ? "heat up & hold" : "heat up";
             else:
               - script.execute: timer_toggle
     on_multi_click:
