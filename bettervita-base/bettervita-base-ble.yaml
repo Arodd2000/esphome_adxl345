@@ -65,7 +65,6 @@ binary_sensor:
               - binary_sensor.is_off: timer_active
               - binary_sensor.is_off: timer_reached
               - binary_sensor.is_on: temperature_reached
-              - lambda: return !id(kettle_mode).state.compare("heat up & hold");
             then:
               script.execute: timer_toggle
 
