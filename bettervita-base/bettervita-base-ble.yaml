@@ -67,6 +67,15 @@ binary_sensor:
               - binary_sensor.is_on: temperature_reached
             then:
               script.execute: timer_toggle
+        - if:
+            condition:
+              - binary_sensor.is_on: temperature_reached
+              - lambda: return id(kettle_mode_standby_on_tilt);
+              - lambda: return !id(kettle_mode).state.compare("heat up & hold");
+            then:
+              - select.set:
+                  id: kettle_mode
+                  option: standby
 
 sensor:
   - platform: ble_client
