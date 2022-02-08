@@ -11,13 +11,13 @@ i2c:
   frequency: 800kHz
 
 font:
-  - file: 'dogicapixel.ttf'
+  - file: 'packages/fonts/dogicapixel.ttf'
     id: ttf8
     size: 8
-  - file: 'dogicapixel.ttf'
+  - file: 'packages/fonts/dogicapixel.ttf'
     id: ttf12
     size: 12
-  - file: 'dogicapixel.ttf'
+  - file: 'packages/fonts/dogicapixel.ttf'
     id: ttf24
     size: 24
 
