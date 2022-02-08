@@ -22,26 +22,26 @@ font:
     size: 24
 
 image:
-  - file: 'icons/thermometer-alert-whitebg.png'
+  - file: 'packages/icons/thermometer-alert-whitebg.png'
     id: icon_thermometer_alert
-  - file: 'icons/thermometer-chevron-up-whitebg.png'
+  - file: 'packages/icons/thermometer-chevron-up-whitebg.png'
     id: icon_thermometer_heating
-  - file: 'icons/thermometer-high-whitebg.png'
+  - file: 'packages/icons/thermometer-high-whitebg.png'
     id: icon_thermometer_high
 
-  - file: 'icons/battery-alert-variant-outline-whitebg.png'
+  - file: 'packages/icons/battery-alert-variant-outline-whitebg.png'
     id: icon_battery_alert
 
-  - file: 'icons/timer-outline-whitebg.png'
+  - file: 'packages/icons/timer-outline-whitebg.png'
     id: icon_timer
 
-  - file: 'icons/home-assistant-whitebg.png'
+  - file: 'packages/icons/home-assistant-whitebg.png'
     id: icon_home_assistant
 
-  - file: 'icons/wifi-alert-whitebg.png'
+  - file: 'packages/icons/wifi-alert-whitebg.png'
     id: icon_wifi_alert
 
-  - file: 'icons/kettle-outline-whitebg.png'
+  - file: 'packages/icons/kettle-outline-whitebg.png'
     id: icon_kettle_outline
 
 display:
