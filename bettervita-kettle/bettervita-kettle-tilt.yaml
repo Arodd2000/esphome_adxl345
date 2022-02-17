@@ -8,6 +8,6 @@ binary_sensor:
       number: ${pin_kettle_tilted}
       mode:
         input: true
-        pullup: false
+        pullup: true
         pulldown: false
 
