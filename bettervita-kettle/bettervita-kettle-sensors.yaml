@@ -10,9 +10,11 @@ substitutions:
   battery_calibration_lower: 0.0 -> 0.0
   battery_calibration_upper: 1.856 -> 3.8
   delayed_on_kettle_in_base: 750ms
+  interval_ntc_adc: 500ms
+  delta_water_temperature: "0.33"
 
 interval:
-  - interval: 100ms
+  - interval: ${interval_ntc_adc}
     then:
       - switch.turn_on: ntc_vcc
       - component.update: vcc_adc
@@ -56,6 +58,8 @@ sensor:
       - 275.0kOhm -> 2.5°C
     unit_of_measurement: "°C"
     device_class: "temperature"
+    filters:
+      - delta: ${delta_water_temperature}
 
   - platform: adc
     id: battery_voltage
