@@ -86,7 +86,6 @@ sensor:
     service_uuid: F79E6A9B-B3A2-4151-A318-E01CBCFE9FCE
     characteristic_uuid: 00002A6E-0000-1000-8000-00805F9B34FA
     notify: true
-    update_interval: 1s
     unit_of_measurement: "°C"
     device_class: "temperature"
     state_class: "measurement"
@@ -94,7 +93,6 @@ sensor:
 
   - platform: ble_client
     internal: true
-    update_interval: 1s
     id: ble_kettle_in_base
     ble_client_id: ble_kettle
     type: characteristic
@@ -114,7 +112,6 @@ sensor:
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
     characteristic_uuid: 00002A19-0000-1000-8000-00805F9B34FA
     notify: true
-    update_interval: 30s
     unit_of_measurement: "%"
     device_class: "battery"
     state_class: "measurement"
@@ -127,7 +124,6 @@ sensor:
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
     characteristic_uuid: 00002B18-0000-1000-8000-00805F9B34FA
     notify: true
-    update_interval: 30s
     accuracy_decimals: 1
     unit_of_measurement: "V"
     device_class: "voltage"
@@ -141,7 +137,6 @@ sensor:
     service_uuid: F2F807C2-5986-436B-8516-092175BE8B61
     characteristic_uuid: E9A1C076-1EE1-4A21-8F52-9150AD3E4AB6
     notify: true
-    update_interval: 250ms
     lambda: |-
       bool button_pushed = (x[0] != 0);
       id(kettle_button).publish_state(button_pushed);
@@ -154,7 +149,6 @@ sensor:
     service_uuid: ABFE4264-1A3E-40E6-890C-2B96FF4788CA
     characteristic_uuid: 4147E8E1-05D1-474D-8314-22FD95DC7330
     notify: true
-    update_interval: 1s
     lambda: |-
       bool is_kettle_tilted = (x[0] != 0);
       id(kettle_tilted).publish_state(is_kettle_tilted);

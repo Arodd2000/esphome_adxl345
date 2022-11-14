@@ -1,5 +1,6 @@
 external_components:
-  - source: github://DerFlob/esphome-ble-controller@allow-interal
+  - source: github://wifwucite/esphome-ble-controller
+  #- source: github://DerFlob/esphome-ble-controller@allow-interal
 
 esp32_ble_controller:
   security_mode: none
