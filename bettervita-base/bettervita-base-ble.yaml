@@ -81,6 +81,7 @@ sensor:
   - platform: ble_client
     ble_client_id: ble_kettle
     id: water_temperature
+    type: characteristic
     name: "${name_verbose} Water Temperature"
     service_uuid: F79E6A9B-B3A2-4151-A318-E01CBCFE9FCE
     characteristic_uuid: 00002A6E-0000-1000-8000-00805F9B34FA
@@ -96,6 +97,7 @@ sensor:
     update_interval: 1s
     id: ble_kettle_in_base
     ble_client_id: ble_kettle
+    type: characteristic
     service_uuid: F79E6A9B-B3A2-4151-A318-E01CBCFE9FCE
     characteristic_uuid: 75618FBB-C35B-4BF4-A418-94E5008329F2
     notify: true
@@ -107,6 +109,7 @@ sensor:
   - platform: ble_client
     id: ble_battery_level
     ble_client_id: ble_kettle
+    type: characteristic
     name: "${name_verbose} Battery Level"
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
     characteristic_uuid: 00002A19-0000-1000-8000-00805F9B34FA
@@ -119,6 +122,7 @@ sensor:
 
   - platform: ble_client
     ble_client_id: ble_kettle
+    type: characteristic
     name: "${name_verbose} Battery Voltage"
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
     characteristic_uuid: 00002B18-0000-1000-8000-00805F9B34FA
@@ -133,6 +137,7 @@ sensor:
   - platform: ble_client
     id: kettle_button_raw
     ble_client_id: ble_kettle
+    type: characteristic
     service_uuid: F2F807C2-5986-436B-8516-092175BE8B61
     characteristic_uuid: E9A1C076-1EE1-4A21-8F52-9150AD3E4AB6
     notify: true
@@ -145,6 +150,7 @@ sensor:
   - platform: ble_client
     id: kettle_tilted_raw
     ble_client_id: ble_kettle
+    type: characteristic
     service_uuid: ABFE4264-1A3E-40E6-890C-2B96FF4788CA
     characteristic_uuid: 4147E8E1-05D1-474D-8314-22FD95DC7330
     notify: true
