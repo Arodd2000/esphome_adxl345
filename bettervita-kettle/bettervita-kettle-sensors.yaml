@@ -9,6 +9,7 @@ substitutions:
   attenuation_battery_voltage: auto
   battery_calibration_lower: 0.0 -> 0.0
   battery_calibration_upper: 1.856 -> 3.8
+  delayed_on_kettle_in_base: 750ms
 
 interval:
   - interval: 100ms
@@ -101,4 +102,6 @@ binary_sensor:
         input: true
         pulldown: true
       inverted: false
+    filters:
+      - delayed_on: ${delayed_on_kettle_in_base}
 

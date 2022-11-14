@@ -1,5 +1,6 @@
 substitutions:
   pin_kettle_tilted: GPIO23
+  delayed_kettle_tilted: 500ms
 
 binary_sensor:
   - platform: gpio
@@ -10,4 +11,5 @@ binary_sensor:
         input: true
         pullup: true
         pulldown: false
-
+    filters:
+      - delayed_on_off: ${delayed_kettle_tilted}
