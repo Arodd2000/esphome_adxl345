@@ -89,7 +89,11 @@ sensor:
     unit_of_measurement: "°C"
     device_class: "temperature"
     state_class: "measurement"
-    lambda: "return *(float *)(&x[0]);"
+    lambda: |-
+      if (x.size() < sizeof(float)) {
+        return NAN;
+      }
+      return *(float *)x.data();
 
   - platform: ble_client
     internal: true
@@ -100,9 +104,9 @@ sensor:
     characteristic_uuid: 75618FBB-C35B-4BF4-A418-94E5008329F2
     notify: true
     lambda: |-
-      bool is_kettle_in_base = (x[0] != 0);
+      bool is_kettle_in_base = (x.size() > 0 && x[0] != 0);
       id(kettle_in_base).publish_state(is_kettle_in_base);
-      return x[0];
+      return is_kettle_in_base ? 1.0 : 0.0;
 
   - platform: ble_client
     id: ble_battery_level
@@ -115,7 +119,11 @@ sensor:
     unit_of_measurement: "%"
     device_class: "battery"
     state_class: "measurement"
-    lambda: "return *(float *)(&x[0]);"
+    lambda: |-
+      if (x.size() < sizeof(float)) {
+        return NAN;
+      }
+      return *(float *)x.data();
 
   - platform: ble_client
     ble_client_id: ble_kettle
@@ -123,12 +131,17 @@ sensor:
     name: "${name_verbose} Battery Voltage"
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
     characteristic_uuid: 00002B18-0000-1000-8000-00805F9B34FA
-    notify: true
+    notify: false
+    update_interval: 30s
     accuracy_decimals: 1
     unit_of_measurement: "V"
     device_class: "voltage"
     state_class: "measurement"
-    lambda: "return *(float *)(&x[0]);"
+    lambda: |-
+      if (x.size() < sizeof(float)) {
+        return NAN;
+      }
+      return *(float *)x.data();
 
   - platform: ble_client
     id: kettle_button_raw
@@ -138,9 +151,9 @@ sensor:
     characteristic_uuid: E9A1C076-1EE1-4A21-8F52-9150AD3E4AB6
     notify: true
     lambda: |-
-      bool button_pushed = (x[0] != 0);
+      bool button_pushed = (x.size() > 0 && x[0] != 0);
       id(kettle_button).publish_state(button_pushed);
-      return x[0];
+      return button_pushed ? 1.0 : 0.0;
 
   - platform: ble_client
     id: kettle_tilted_raw
@@ -150,9 +163,9 @@ sensor:
     characteristic_uuid: 4147E8E1-05D1-474D-8314-22FD95DC7330
     notify: true
     lambda: |-
-      bool is_kettle_tilted = (x[0] != 0);
+      bool is_kettle_tilted = (x.size() > 0 && x[0] != 0);
       id(kettle_tilted).publish_state(is_kettle_tilted);
-      return x[0];
+      return is_kettle_tilted ? 1.0 : 0.0;
 
 output:
   - platform: ble_client
