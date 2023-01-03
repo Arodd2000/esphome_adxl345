@@ -5,6 +5,7 @@ substitutions:
   profile_black_tea_timer: "200.0"
   profile_green_tea_temperature: "60.0"
   profile_green_tea_timer: "180.0"
+  profile_hot_bottle_temperature: "85.0"
 
 globals:
   - id: profile_general_temperature
@@ -36,6 +37,7 @@ select:
       - Black Tea
       - Liquorice
       - Green Tea
+      - Hot Bottle
     on_value:
       then:
         - select.set:
@@ -158,4 +160,27 @@ select:
               - globals.set:
                   id: timer_toggle_on_tilt
                   value: "true"
+
+        - if:
+            condition:
+              lambda: return !x.compare("Hot Bottle");
+            then:
+              - climate.control:
+                  id: temperature_pid
+                  target_temperature: ${profile_hot_bottle_temperature}
+              - select.set:
+                  id: timer_direction
+                  option: Count Up
+              - number.set:
+                  id: timer_default_value
+                  value: 0.0
+              - globals.set:
+                  id: kettle_mode_hold_on_start
+                  value: "true"
+              - globals.set:
+                  id: kettle_mode_standby_on_tilt
+                  value: "true"
+              - globals.set:
+                  id: timer_toggle_on_tilt
+                  value: "false"
 
