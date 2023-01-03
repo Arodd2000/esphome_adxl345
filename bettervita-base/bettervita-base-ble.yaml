@@ -65,6 +65,7 @@ binary_sensor:
               - binary_sensor.is_off: timer_active
               - binary_sensor.is_off: timer_reached
               - binary_sensor.is_on: temperature_reached
+              - lambda: return id(timer_toggle_on_tilt);
             then:
               script.execute: timer_toggle
         - if:

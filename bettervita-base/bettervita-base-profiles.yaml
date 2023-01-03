@@ -19,6 +19,10 @@ globals:
     type: bool
     restore_value: true
     initial_value: "true"
+  - id: timer_toggle_on_tilt
+    type: bool
+    restore_value: true
+    initial_value: "true"
 
 select:
   - platform: template
@@ -59,6 +63,9 @@ select:
               - globals.set:
                   id: kettle_mode_standby_on_tilt
                   value: "false"
+              - globals.set:
+                  id: timer_toggle_on_tilt
+                  value: "true"
 
         - if:
             condition:
@@ -79,6 +86,9 @@ select:
               - globals.set:
                   id: kettle_mode_standby_on_tilt
                   value: "false"
+              - globals.set:
+                  id: timer_toggle_on_tilt
+                  value: "true"
 
         - if:
             condition:
@@ -98,6 +108,9 @@ select:
                   value: "true"
               - globals.set:
                   id: kettle_mode_standby_on_tilt
+                  value: "true"
+              - globals.set:
+                  id: timer_toggle_on_tilt
                   value: "true"
 
         - if:
@@ -119,6 +132,9 @@ select:
               - globals.set:
                   id: kettle_mode_standby_on_tilt
                   value: "true"
+              - globals.set:
+                  id: timer_toggle_on_tilt
+                  value: "true"
 
         - if:
             condition:
@@ -138,5 +154,8 @@ select:
                   value: "true"
               - globals.set:
                   id: kettle_mode_standby_on_tilt
+                  value: "true"
+              - globals.set:
+                  id: timer_toggle_on_tilt
                   value: "true"
 
