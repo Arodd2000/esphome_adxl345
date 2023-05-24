@@ -2,6 +2,8 @@ wifi:
   id: wifi_component
   networks: !secret known_networks
 
+  power_save_mode: HIGH
+
 api:
   id: native_api
 

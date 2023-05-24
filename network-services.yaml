@@ -6,6 +6,8 @@ wifi:
     ssid: "${name_verbose} Fallback"
     password: !secret fallback_password
 
+  power_save_mode: HIGH
+
 captive_portal:
 
 api:
