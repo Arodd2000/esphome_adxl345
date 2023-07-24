@@ -1,0 +1,33 @@
+substitutions:
+  baresp_timeout: 30s
+
+esphome:
+  on_boot:
+    priority: 600.0
+    then:
+      - switch.turn_on: scanner_enable
+      - wait_until:
+          condition:
+            api.connected:
+      - uart.write:
+          id: scanner_uart
+          data: "$?GGG\r"
+
+deep_sleep:
+
+interval:
+  - interval: 5s
+    then:
+      if:
+        condition:
+          for:
+            time: ${baresp_timeout}
+            condition:
+              binary_sensor.is_off:
+                id: adxl_activity
+        then:
+          - switch.turn_off: scanner_enable
+          - lambda: "static_cast<ADXL345Sensor *>(id(adxl345))->enable_activity_interrupt(true);"
+          - deep_sleep.enter:
+              sleep_duration: 100d
+

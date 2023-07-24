@@ -1,0 +1,30 @@
+esphome:
+  includes:
+    - "packages/baresp/ADXL345.h"
+  libraries:
+    - "Wire"
+    - "SPI"
+    - "Adafruit BusIO"
+    - "Adafruit Unified Sensor"
+    - "Adafruit ADXL345"
+
+i2c:
+  sda: GPIO14
+  scl: GPIO12
+
+custom_component:
+  - lambda: |-
+      auto adxl345 = new ADXL345Sensor();
+      return {adxl345};
+    components:
+      - id: adxl345
+
+binary_sensor:
+  platform: custom
+  lambda: |-
+    return {static_cast<ADXL345Sensor *>(id(adxl345))->activity};
+  binary_sensors:
+    - name: "Activity"
+      id: adxl_activity
+      device_class: moving
+
