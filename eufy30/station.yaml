@@ -16,7 +16,7 @@ globals:
 
 binary_sensor:
   - platform: gpio
-    name: ${name_verbose} In Station
+    name: In Station
     pin: GPIO16
   - platform: gpio
     id: running
@@ -33,7 +33,7 @@ binary_sensor:
 sensor:
   - platform: template
     id: runs
-    name: ${name_verbose} Runs
+    name: Runs
     icon: mdi:pound
     update_interval: never
     unit_of_measurement: n

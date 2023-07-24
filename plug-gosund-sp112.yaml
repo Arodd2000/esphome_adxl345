@@ -18,7 +18,7 @@ time:
 
 binary_sensor:
   - platform: gpio
-    name: ${name_verbose} Button
+    name: Button
     pin:
       number: GPIO16
       inverted: true
@@ -28,7 +28,7 @@ binary_sensor:
 switch:
   - platform: gpio
     id: mains
-    name: ${name_verbose} Mains
+    name: Mains
     pin: GPIO14
     restore_mode: ${mains_restore_mode}
     on_turn_on:
@@ -38,7 +38,7 @@ switch:
 
   - platform: gpio
     id: usb
-    name: ${name_verbose} USB
+    name: USB
     pin: GPIO5
     restore_mode: ${usb_restore_mode}
 

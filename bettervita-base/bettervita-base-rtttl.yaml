@@ -69,7 +69,7 @@ binary_sensor:
 
 button:
   - platform: template
-    name: ${name_verbose} Chirp
+    name: Chirp
     icon: mdi:bird
     on_press:
       script.execute: rtttl_double_beep

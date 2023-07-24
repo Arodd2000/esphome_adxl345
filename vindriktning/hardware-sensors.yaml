@@ -53,7 +53,7 @@ sensor:
     uart_id: mhz19_uart
     co2:
       id: mhz19_co2_sensor
-      name: "${name_verbose} CO2"
+      name: CO2
       filters:
         - lambda: return x + id(mhz19_co2_sensor_offset).state;
       disabled_by_default: ${disable_mhz19}
@@ -65,13 +65,13 @@ sensor:
     i2c_id: ccs811_i2c
     eco2:
       id: ccs811_eco2_sensor
-      name: "${name_verbose} eCO2"
+      name: eCO2
       filters:
         - lambda: return x + id(ccs811_eco2_sensor_offset).state;
       disabled_by_default: ${disable_ccs811}
     tvoc:
       id: ccs811_tvoc_sensor
-      name: "${name_verbose} TVOC"
+      name: TVOC
       icon: "mdi:emoticon-poop"
       filters:
         - lambda: return x + id(ccs811_tvoc_sensor_offset).state;
@@ -83,21 +83,21 @@ sensor:
     uart_id: pm1006_uart
     pm_2_5:
       id: pm1006_pm_sensor
-      name: "${name_verbose} 2.5μm Particles"
+      name: 2.5μm Particles
       filters:
         - lambda: return x + id(pm1006_pm_sensor_offset).state;
     update_interval: never
 
   - platform: adc
     pin: A0
-    name: "${name_verbose} Photodiode"
+    name: Photodiode
     update_interval: 10s
     icon: "mdi:brightness-6"
 
 number:
   - platform: template
     id: mhz19_co2_sensor_offset
-    name: "${name_verbose} CO2 Offset"
+    name: CO2 Offset
     min_value: -1000.0
     max_value: +1000.0
     step: 1.0
@@ -113,7 +113,7 @@ number:
 
   - platform: template
     id: ccs811_eco2_sensor_offset
-    name: "${name_verbose} eCO2 Offset"
+    name: eCO2 Offset
     min_value: -1000.0
     max_value: +1000.0
     step: 1.0
@@ -129,7 +129,7 @@ number:
 
   - platform: template
     id: ccs811_tvoc_sensor_offset
-    name: "${name_verbose} TVOC Offset"
+    name: TVOC Offset
     min_value: -1000.0
     max_value: +1000.0
     step: 1.0
@@ -145,7 +145,7 @@ number:
 
   - platform: template
     id: pm1006_pm_sensor_offset
-    name: "${name_verbose} PM Offset"
+    name: PM Offset
     min_value: -1000.0
     max_value: +1000.0
     step: 1.0

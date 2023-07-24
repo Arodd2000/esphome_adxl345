@@ -7,7 +7,7 @@ esp8266:
 
 button:
   - platform: template
-    name: "${name_verbose} Calibrate MHZ19"
+    name: Calibrate MHZ19
     on_press:
       - mhz19.calibrate_zero: mhz19_sensor
     entity_category: "config"
@@ -16,7 +16,7 @@ button:
 number:
   - platform: template
     id: co2_warn_level
-    name: "${name_verbose} CO2 Warn Level"
+    name: CO2 Warn Level
     min_value: 0.0
     max_value: 50000.0
     step: 1.0
@@ -30,7 +30,7 @@ number:
 
   - platform: template
     id: co2_critical_level
-    name: "${name_verbose} CO2 Critical Level"
+    name: CO2 Critical Level
     min_value: 0.0
     max_value: 50000.0
     step: 1.0
@@ -44,7 +44,7 @@ number:
 
   - platform: template
     id: pm_warn_level
-    name: "${name_verbose} PM Warn Level"
+    name: PM Warn Level
     min_value: 0.0
     max_value: 50000.0
     step: 1.0
@@ -57,7 +57,7 @@ number:
 
   - platform: template
     id: pm_critical_level
-    name: "${name_verbose} PM Critical Level"
+    name: PM Critical Level
     min_value: 0.0
     max_value: 50000.0
     step: 1.0
@@ -70,7 +70,7 @@ number:
 
   - platform: template
     id: tvoc_warn_level
-    name: "${name_verbose} TVOC Warn Level"
+    name: TVOC Warn Level
     min_value: 0.0
     max_value: 50000.0
     step: 1.0
@@ -84,7 +84,7 @@ number:
 
   - platform: template
     id: tvoc_critical_level
-    name: "${name_verbose} TVOC Critical Level"
+    name: TVOC Critical Level
     min_value: 0.0
     max_value: 50000.0
     step: 1.0

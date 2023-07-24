@@ -42,7 +42,7 @@ switch:
 
   - platform: template
     id: switch_leds_active
-    name: "${name_verbose} LEDs Active"
+    name: LEDs Active
     optimistic: true
     icon: "mdi:led-on"
     on_turn_on:

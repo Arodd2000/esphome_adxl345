@@ -32,7 +32,7 @@ output:
 select:
   - platform: template
     id: kettle_mode
-    name: "${name_verbose} Mode"
+    name: Mode
     options:
       - idle
       - standby
@@ -82,7 +82,7 @@ interval:
 climate:
   - platform: pid
     id: temperature_pid
-    name: "${name_verbose} PID Controller"
+    name: PID Controller
     sensor: water_temperature
     default_target_temperature: 35
     heat_output: heating_element
@@ -105,7 +105,7 @@ climate:
 binary_sensor:
   - platform: template
     id: temperature_reached
-    name: "${name_verbose} Setpoint Reached"
+    name: Setpoint Reached
     on_press:
       script.execute: rtttl_mario
 
@@ -117,7 +117,7 @@ binary_sensor:
 
 sensor:
   - platform: template
-    name: "${name_verbose} Power"
+    name: Power
     id: power
     device_class: "power"
     unit_of_measurement: "W"
@@ -133,7 +133,7 @@ sensor:
       }
 
   - platform: total_daily_energy
-    name: "${name_verbose} Daily Energy"
+    name: Daily Energy
     power_id: power
     method: left
     unit_of_measurement: "kWh"

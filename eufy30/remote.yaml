@@ -9,7 +9,7 @@ remote_transmitter:
 
 button:
   - platform: template
-    name: ${name_verbose} Start
+    name: Start
     icon: mdi:robot-vacuum
     on_press:
       - remote_transmitter.transmit_raw:
@@ -20,7 +20,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Pause
+    name: Pause
     icon: mdi:pause-octagon-outline
     on_press:
       - remote_transmitter.transmit_raw:
@@ -32,7 +32,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Home
+    name: Home
     icon: mdi:home-import-outline
     on_press:
       - remote_transmitter.transmit_raw:
@@ -44,7 +44,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Forwards
+    name: Forwards
     icon: mdi:arrow-up-bold-outline
     on_press:
       - remote_transmitter.transmit_raw:
@@ -56,7 +56,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Backwards
+    name: Backwards
     icon: mdi:arrow-down-bold-outline
     on_press:
       - remote_transmitter.transmit_raw:
@@ -68,7 +68,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Left
+    name: Left
     icon: mdi:arrow-left-bold-outline
     on_press:
       - remote_transmitter.transmit_raw:
@@ -80,7 +80,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Right
+    name: Right
     icon: mdi:arrow-right-bold-outline
     on_press:
       - remote_transmitter.transmit_raw:
@@ -92,7 +92,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Power Standard
+    name: Power Standard
     icon: mdi:gauge-low
     on_press:
       - remote_transmitter.transmit_raw:
@@ -104,7 +104,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Power BoostIQ
+    name: Power BoostIQ
     icon: mdi:gauge
     on_press:
       - remote_transmitter.transmit_raw:
@@ -116,7 +116,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Power Max
+    name: Power Max
     icon: mdi:gauge-full
     on_press:
       - remote_transmitter.transmit_raw:
@@ -128,7 +128,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Clean Auto
+    name: Clean Auto
     icon: mdi:play-outline
     on_press:
       - remote_transmitter.transmit_raw:
@@ -140,7 +140,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Clean Spot
+    name: Clean Spot
     icon: mdi:image-filter-center-focus
     on_press:
       - remote_transmitter.transmit_raw:
@@ -152,7 +152,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Clean Corners
+    name: Clean Corners
     icon: mdi:rounded-corner
     on_press:
       - remote_transmitter.transmit_raw:
@@ -164,7 +164,7 @@ button:
           carrier_frequency: 38 kHz
 
   - platform: template
-    name: ${name_verbose} Clean Room
+    name: Clean Room
     icon: mdi:arrow-expand-all
     on_press:
       - remote_transmitter.transmit_raw:

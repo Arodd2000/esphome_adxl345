@@ -9,7 +9,7 @@ time:
 switch:
   - platform: template
     id: switch_quiet_mode
-    name: "${name_verbose} Quiet Mode"
+    name: Quiet Mode
     optimistic: true
     icon: "mdi:power-sleep"
     on_turn_on:

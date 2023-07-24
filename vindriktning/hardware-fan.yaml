@@ -12,7 +12,7 @@ output:
 number:
   - platform: template
     id: fan_speed
-    name: "${name_verbose} Fan Speed"
+    name: Fan Speed
     min_value: 0.0
     max_value: 100.0
     step: 1.0

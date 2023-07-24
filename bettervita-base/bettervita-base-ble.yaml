@@ -21,7 +21,7 @@ ble_client:
 binary_sensor:
   - platform: template
     id: kettle_in_base
-    name: ${name_verbose} Kettle in Base
+    name: Kettle in Base
     on_state:
       if:
         condition:
@@ -33,7 +33,7 @@ binary_sensor:
 
   - platform: template
     id: kettle_button
-    name: ${name_verbose} Kettle Button
+    name: Kettle Button
     on_click:
       then:
         - if:
@@ -57,7 +57,7 @@ binary_sensor:
 
   - platform: template
     id: kettle_tilted
-    name: ${name_verbose} Kettle Tilted
+    name: Kettle Tilted
     on_press:
       then:
         - if:
@@ -83,7 +83,7 @@ sensor:
     ble_client_id: ble_kettle
     id: water_temperature
     type: characteristic
-    name: "${name_verbose} Water Temperature"
+    name: Water Temperature
     service_uuid: F79E6A9B-B3A2-4151-A318-E01CBCFE9FCE
     characteristic_uuid: 00002A6E-0000-1000-8000-00805F9B34FA
     notify: true
@@ -113,7 +113,7 @@ sensor:
     id: ble_battery_level
     ble_client_id: ble_kettle
     type: characteristic
-    name: "${name_verbose} Battery Level"
+    name: Battery Level
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
     characteristic_uuid: 00002A19-0000-1000-8000-00805F9B34FA
     notify: true
@@ -129,7 +129,7 @@ sensor:
   - platform: ble_client
     ble_client_id: ble_kettle
     type: characteristic
-    name: "${name_verbose} Battery Voltage"
+    name: Battery Voltage
     service_uuid: 0000180F-0000-1000-8000-00805F9B34FA
     characteristic_uuid: 00002B18-0000-1000-8000-00805F9B34FA
     notify: false
@@ -178,6 +178,6 @@ output:
 light:
   - platform: binary
     id: kettle_led
-    name: ${name_verbose} Kettle LED
+    name: Kettle LED
     output: kettle_led_output
 

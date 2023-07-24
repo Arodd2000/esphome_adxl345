@@ -102,7 +102,7 @@ binary_sensor:
 text_sensor:
   - platform: template
     id: co2_alert
-    name: "${name_verbose} CO2 Alert"
+    name: CO2 Alert
     icon: "mdi:alert-outline"
     update_interval: never
     lambda: |-
@@ -117,7 +117,7 @@ text_sensor:
 
   - platform: template
     id: tvoc_alert
-    name: "${name_verbose} TVOC Alert"
+    name: TVOC Alert
     icon: "mdi:alert-outline"
     update_interval: never
     lambda: |-
@@ -132,7 +132,7 @@ text_sensor:
 
   - platform: template
     id: pm_alert
-    name: "${name_verbose} PM Alert"
+    name: PM Alert
     icon: "mdi:alert-outline"
     update_interval: never
     lambda: |-

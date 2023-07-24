@@ -1,6 +1,6 @@
 select:
   - platform: template
-    name: "${name_verbose} Timer Direction"
+    name: Timer Direction
     icon: "mdi:timer-cog-outline"
     id: timer_direction
     options:
@@ -16,13 +16,13 @@ select:
 
 button:
   - platform: template
-    name: "${name_verbose} Toggle Timer"
+    name: Toggle Timer
     icon: "mdi:timer-outline"
     on_press:
      script.execute: timer_toggle
 
   - platform: template
-    name: "${name_verbose} Reset Timer"
+    name: Reset Timer
     icon: "mdi:timer-outline"
     on_press:
       script.execute: timer_reset
@@ -30,7 +30,7 @@ button:
 number:
   - platform: template
     id: timer_default_value
-    name: "${name_verbose} Timer Default"
+    name: Timer Default
     min_value: 0.0
     max_value: 3600.0
     step: 1.0
@@ -44,7 +44,7 @@ number:
 sensor:
   - platform: template
     id: timer_value
-    name: "${name_verbose} Timer"
+    name: Timer
     icon: "mdi:timer-outline"
     unit_of_measurement: "s"
     accuracy_decimals: 0
@@ -53,7 +53,7 @@ sensor:
 binary_sensor:
   - platform: template
     id: timer_reached
-    name: "${name_verbose} Timer Reached"
+    name: Timer Reached
     icon: "mdi:timer-outline"
     on_press:
       - script.execute: rtttl_beep
@@ -67,7 +67,7 @@ binary_sensor:
 
   - platform: template
     id: timer_active
-    name: "${name_verbose} Timer Active"
+    name: Timer Active
     icon: "mdi:timer-outline"
     lambda: return id(timer_start).is_running();
     on_press:

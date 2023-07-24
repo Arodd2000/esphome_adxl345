@@ -10,7 +10,7 @@ time:
 
 binary_sensor:
   - platform: gpio
-    name: ${name_verbose} Button
+    name: Button
     pin:
       number: GPIO13
     on_press:
@@ -19,7 +19,7 @@ binary_sensor:
 switch:
   - platform: gpio
     id: mains
-    name: ${name_verbose} Mains
+    name: Mains
     pin: GPIO15
     restore_mode: ${mains_restore_mode}
     on_turn_on:

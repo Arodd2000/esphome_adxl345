@@ -118,7 +118,7 @@ interval:
 
 button:
   - platform: template
-    name: "${name_verbose} OnOff Click"
+    name: OnOff Click
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -130,7 +130,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} OnOff ClickLong"
+    name: OnOff ClickLong
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -142,7 +142,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Hold Click"
+    name: Hold Click
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -154,7 +154,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Hold ClickLong"
+    name: Hold ClickLong
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -166,7 +166,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Menu Click"
+    name: Menu Click
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -178,7 +178,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Menu ClickLong"
+    name: Menu ClickLong
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -190,7 +190,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Timer Click"
+    name: Timer Click
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -202,7 +202,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Timer ClickLong"
+    name: Timer ClickLong
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -214,7 +214,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Plus Click"
+    name: Plus Click
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -226,7 +226,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Plus ClickLong"
+    name: Plus ClickLong
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -238,7 +238,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Plus ClickHold"
+    name: Plus ClickHold
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -250,7 +250,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Minus Click"
+    name: Minus Click
     on_press:
       then:
         - binary_sensor.template.publish:
@@ -262,7 +262,7 @@ button:
             state: false
 
   - platform: template
-    name: "${name_verbose} Minus ClickLong"
+    name: Minus ClickLong
     on_press:
       then:
         - binary_sensor.template.publish:

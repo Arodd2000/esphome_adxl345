@@ -4,7 +4,7 @@ substitutions:
 
 sensor:
   - platform: adc
-    name: ${name_verbose} Battery Voltage
+    name: Battery Voltage
     id: battery_voltage
     pin: A0
     update_interval: 30s
@@ -18,7 +18,7 @@ sensor:
 
   - platform: template
     id: battery_level
-    name: ${name_verbose} Battery Level
+    name: Battery Level
     update_interval: 30s
     accuracy_decimals: 0
     unit_of_measurement: "%"
@@ -35,7 +35,7 @@ sensor:
 
 binary_sensor:
   - platform: template
-    name: ${name_verbose} Battery State
+    name: Battery State
     device_class: battery
     lambda: |-
       float level = id(battery_level).state;

@@ -1,6 +1,6 @@
 number:
   - platform: template
-    name: ${name_verbose} Fake Water Temperature
+    name: Fake Water Temperature
     id: fake_temperature
     min_value: 0
     max_value: 101
@@ -11,7 +11,7 @@ number:
 
 sensor:
   - platform: template
-    name: "${name_verbose} Water Temperature"
+    name: Water Temperature
     id: water_temperature
     update_interval: 5s
     lambda: |-
@@ -22,21 +22,21 @@ sensor:
 
   - platform: template
     id: battery_voltage
-    name: "${name_verbose} Battery Voltage"
+    name: Battery Voltage
     lambda: !lambda "return 4.0;"
     unit_of_measurement: "V"
     device_class: "voltage"
 
   - platform: template
     id: battery_level
-    name: "${name_verbose} Battery Level"
+    name: Battery Level
     lambda: !lambda "return 42.0;"
     unit_of_measurement: "%"
     device_class: "battery"
 
 switch:
   - platform: template
-    name: "${name_verbose} Kettle in Base"
+    name: Kettle in Base
     id: kettle_in_base
     optimistic: true
 
