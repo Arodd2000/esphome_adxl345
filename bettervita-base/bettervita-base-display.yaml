@@ -73,7 +73,7 @@ display:
           bool pid_active = id(temperature_pid).mode != CLIMATE_MODE_OFF;
           bool heating_element_active = id(heating_element_feedback).state;
 
-          std::vector<std::pair<int, Image*>> icons = {};
+          std::vector<std::pair<int, esphome::image::Image*>> icons = {};
 
           if (heating_element_active) {
             icons.push_back(std::make_pair(1, id(icon_thermometer_heating)));
